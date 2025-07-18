@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="Character.cs" />
+    <Compile Include="Model\Camera.cs" />
+    <Compile Include="Model\Character.cs" />
     <Compile Include="JumpGame.cs">
       <SubType>Form</SubType>
     </Compile>
