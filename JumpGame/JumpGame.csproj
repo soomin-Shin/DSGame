@@ -54,7 +54,7 @@
     <Compile Include="JumpGame.Designer.cs">
       <DependentUpon>JumpGame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Platform.cs" />
+    <Compile Include="Model\Platform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="JumpGame.resx">
@@ -81,6 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="Utils\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
