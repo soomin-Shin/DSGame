@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumpGame.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,7 +40,8 @@ namespace JumpGame
         private int _jumpBuffer = 0;
         //폰트
         PrivateFontCollection _fonts = new PrivateFontCollection();
-
+        // 게임 효과음 관리 객체
+        private Effect _gameEffects;
         public JumpGame()                      
         {
             // 게임 화면 너비
@@ -54,9 +56,12 @@ namespace JumpGame
             _character = new Character(400, 1200);
             // 발판 리스트 생성
             _platforms = new List<Platform>();
-            //폰트 적용
+            // 폰트 적용
             LoadCustomFont();
             this.Font = new Font(_fonts.Families[0], 14, FontStyle.Regular);
+            // 효과음 추가
+            _gameEffects = new Effect();
+
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
             _platforms.Add(new Platform(new Rectangle(350, 1040, 100, 20), PlatformType.Moving));
@@ -169,6 +174,7 @@ namespace JumpGame
             if (e.KeyCode == Keys.Space)
             {
                 _jumpBuffer = _jumpBufferFrames;
+                _gameEffects.PlayJumpSound();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -218,7 +224,7 @@ namespace JumpGame
         // 폰트 추가
         private void LoadCustomFont()
         {
-            string fontPath = Path.Combine(Application.StartupPath, "Assets", "Font", "Dongle-Regular.ttf");
+            string fontPath = $"{Application.StartupPath}//Assets//Font//Dongle-Regular.ttf";
             _fonts.AddFontFile(fontPath);
         }
     }
