@@ -81,7 +81,7 @@ namespace JumpGame
             if (_onGround == true)
             {
                 // 위쪽으로 속도 부여
-                _velocityY = -7.5f;
+                _velocityY = -10;
                 _onGround = false;
             }
         }
