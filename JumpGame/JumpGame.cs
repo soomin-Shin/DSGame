@@ -96,7 +96,7 @@ namespace JumpGame
             this.Paint += GameForm_Paint;
 
             // 시작 시간 저장
-            _startTime = DateTime.Now;                     
+            _startTime = DateTime.Now;
         }
 
         // 게임 상태 업데이트
@@ -112,6 +112,7 @@ namespace JumpGame
             if (_character.IsOnGround() == true && _jumpBuffer > 0)
             {
                 _character.Jump();
+                _gameEffects.PlayJumpSound();
                 _jumpBuffer = 0;
             }
 
@@ -154,17 +155,16 @@ namespace JumpGame
                     {
                         // 게임 타이머 멈춤
                         _gameTimer.Stop();
-                        // 게임 시작 경과 시간을 계산
-                        TimeSpan elapsed = DateTime.Now - _startTime;
                         // 메세지 출력
-                        string message = "골인 지점에 도달했습니다!\n걸린 시간: " + elapsed.TotalSeconds.ToString("F2") + "초";
+                        string message = "골인 지점에 도달했습니다!\n걸린 시간: " + _gameStats.ElapsedTime.TotalSeconds.ToString("F2") + "초";
                         MessageBox.Show(message, "게임 종료");
                         this.Close();
                         break; 
                     }
                 }
             }
-
+            // 게임 시간 업데이트
+            _gameStats.ElapsedTime = DateTime.Now - _startTime;
             // 화면 다시 그리기
             this.Invalidate();   
         }
@@ -184,7 +184,6 @@ namespace JumpGame
             if (e.KeyCode == Keys.Space)
             {
                 _jumpBuffer = _jumpBufferFrames;
-                _gameEffects.PlayJumpSound();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -227,6 +226,9 @@ namespace JumpGame
 
             // 캐릭터 그리기
             _character.Draw(g, _camera.X, _camera.Y);
+
+            //Score 그리기
+            DrawScoreUI(g);
         }
 
         // 폰트 추가
@@ -234,6 +236,36 @@ namespace JumpGame
         {
             string fontPath = $"{Application.StartupPath}//Assets//Font//Dongle-Regular.ttf";
             _fonts.AddFontFile(fontPath);
+        }
+
+        /// <summary>
+        /// UI 요소 그리기 메서드
+        /// </summary>
+        private void DrawScoreUI(Graphics g)
+        {
+            // UI 배경 (선택 사항)
+            g.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 0, 0)), 0, this.ClientSize.Height - 60, this.ClientSize.Width, 60);
+
+            // 폰트 설정
+            Font uiFont = new Font(_fonts.Families[0], 20, FontStyle.Bold); // 더 큰 폰트 크기
+            SolidBrush fontBrush = new SolidBrush(Color.White);
+
+            // 점수 표시
+            string scoreText = $"Score: {_gameStats.Score}";
+            g.DrawString(scoreText, uiFont, fontBrush, 10, this.ClientSize.Height - 50);
+
+            // 목숨 표시
+            string livesText = $"Lives: {_gameStats.Lives}";
+            SizeF livesTextSize = g.MeasureString(livesText, uiFont);
+            g.DrawString(livesText, uiFont, fontBrush, this.ClientSize.Width / 2 - livesTextSize.Width / 2, this.ClientSize.Height - 50);
+
+            // 시간 표시
+            string timeText = $"Time: {_gameStats.ElapsedTime.TotalSeconds:F2}초";
+            SizeF timeTextSize = g.MeasureString(timeText, uiFont);
+            g.DrawString(timeText, uiFont, fontBrush, this.ClientSize.Width - timeTextSize.Width - 10, this.ClientSize.Height - 50);
+
+            uiFont.Dispose();
+            fontBrush.Dispose();
         }
 
         /// <summary>

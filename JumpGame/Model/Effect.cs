@@ -12,8 +12,8 @@ namespace JumpGame.Model
     public class Effect
     {
         private WMPLib.WindowsMediaPlayer _bgmPlayer = new WMPLib.WindowsMediaPlayer(); // 배경음악 전용 플레이어
-        private SoundPlayer _jumpSoundPlayer; // 점프 효과음 전용 플레이어
-
+        private WMPLib.WindowsMediaPlayer _jumpSoundPlayer= new WMPLib.WindowsMediaPlayer(); // 점프 효과음 전용 플레이어
+    
         public Effect() // Effect 클래스 생성자 추가 (여기서 초기화)
         {
             BGMSetting(); // 배경음악 초기화 및 재생
@@ -44,8 +44,10 @@ namespace JumpGame.Model
             string jumpSoundFilePath = $"{Application.StartupPath}//Assets//BGM//jumpSound.mp3";
             if (System.IO.File.Exists(jumpSoundFilePath))
             {
-                    _jumpSoundPlayer = new SoundPlayer(jumpSoundFilePath);
-                    _jumpSoundPlayer.Load(); // 미리 로드하여 재생 시 지연을 줄임
+                _jumpSoundPlayer.URL = jumpSoundFilePath;
+                _jumpSoundPlayer.settings.volume = 30;
+                _jumpSoundPlayer.controls.stop(); // URL 설정 후 즉시 정지
+                _jumpSoundPlayer.settings.setMode("loop", false); // 효과음은 반복 재생하지 않도록 설정
             }
         }
 
@@ -56,7 +58,9 @@ namespace JumpGame.Model
         {
             if (_jumpSoundPlayer != null)
             {
-                _jumpSoundPlayer.Play();
+                // 이미 재생 중이라면 처음부터 다시 재생
+                _jumpSoundPlayer.controls.stop();
+                _jumpSoundPlayer.controls.play();
             }
         }
     }

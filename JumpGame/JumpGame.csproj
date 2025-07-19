@@ -66,6 +66,7 @@
     <Compile Include="View\PauseMenuControl.designer.cs">
       <DependentUpon>PauseMenuControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Ui.cs" />
     <EmbeddedResource Include="JumpGame.resx">
       <DependentUpon>JumpGame.cs</DependentUpon>
     </EmbeddedResource>
