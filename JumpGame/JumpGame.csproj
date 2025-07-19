@@ -78,6 +78,7 @@
     <EmbeddedResource Include="View\PauseMenuControl.resx">
       <DependentUpon>PauseMenuControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Assets\Font\Dongle-Regular.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
