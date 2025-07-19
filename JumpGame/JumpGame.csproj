@@ -98,6 +98,7 @@
     <Content Include="Assets\BGM\bgm.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\BGM\jumpSound.mp3" />
     <Content Include="Assets\Image\Acorn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
