@@ -73,15 +73,22 @@ namespace JumpGame
             _gameStats = new GameStats();
 
             // 발판
-            _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(350, 1040, 100, 20), PlatformType.Moving));
-            _platforms.Add(new Platform(new Rectangle(450, 960, 120, 20), PlatformType.StepDisappear));
-            _platforms.Add(new Platform(new Rectangle(320, 880, 110, 20), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(510, 800, 100, 20), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(400, 720, 100, 20), PlatformType.Moving));
-            _platforms.Add(new Platform(new Rectangle(460, 640, 120, 20), PlatformType.StepDisappear));
-            _platforms.Add(new Platform(new Rectangle(380, 560, 100, 20), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(420, 450, 40, 40), PlatformType.Goal));
+            _platforms.Add(new Platform(new Rectangle(400, 1200, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(330, 1150, 40, 15), PlatformType.StepDisappear));
+            _platforms.Add(new Platform(new Rectangle(260, 1100, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(190, 1050, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(120, 1000, 40, 15), PlatformType.Disappear));
+            _platforms.Add(new Platform(new Rectangle(50, 950, 40, 15), PlatformType.Moving));
+            _platforms.Add(new Platform(new Rectangle(120, 900, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(200, 850, 40, 15), PlatformType.StepDisappear));
+            _platforms.Add(new Platform(new Rectangle(280, 800, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(360, 750, 40, 15), PlatformType.Disappear));
+            _platforms.Add(new Platform(new Rectangle(430, 700, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(510, 650, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(580, 600, 40, 15), PlatformType.Moving));
+            _platforms.Add(new Platform(new Rectangle(500, 550, 40, 15), PlatformType.StepDisappear));
+            _platforms.Add(new Platform(new Rectangle(420, 500, 40, 15), PlatformType.Normal));
+            _platforms.Add(new Platform(new Rectangle(300, 400, 40, 40), PlatformType.Goal));
 
             // 타이머 생성
             _gameTimer = new Timer();                      
