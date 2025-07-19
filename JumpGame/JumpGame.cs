@@ -27,8 +27,10 @@ namespace JumpGame
         private bool _leftPressed = false;
         // 오른쪽 버튼 눌렀는지
         private bool _rightPressed = false;
-        // 점프(스페이스) 버튼 눌렀는지
-        private bool _jumpPressed = false;
+        // 점프 입력 버퍼 프레임 수
+        private int _jumpBufferFrames = 5;
+        // 점프 입력 버퍼 카운터
+        private int _jumpBuffer = 0;
 
         public JumpGame()                      
         {
@@ -75,6 +77,19 @@ namespace JumpGame
         // 게임 상태 업데이트
         private void GameTimer_Tick(object sender, EventArgs e)   
         {
+            // 점프 입력 버퍼 관리
+            if (_jumpBuffer > 0)
+            {
+                _jumpBuffer--;
+            }
+
+            // 캐릭터가 현재 땅 위에 있고, 점프 버퍼가 유효하면 점프 실행
+            if (_character.IsOnGround() == true && _jumpBuffer > 0)
+            {
+                _character.Jump();
+                _jumpBuffer = 0;
+            }
+
             // 왼쪽으로 이동
             if (_leftPressed == true)
             {
@@ -143,11 +158,7 @@ namespace JumpGame
             // 점프키는 착지 상태일 때만 한 번 눌림으로 인식
             if (e.KeyCode == Keys.Space)
             {
-                if (_character.IsOnGround() == true)
-                {
-                    _character.Jump();
-                    _jumpPressed = true;
-                }
+                _jumpBuffer = _jumpBufferFrames;
             }
         }
 
