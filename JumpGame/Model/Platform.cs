@@ -14,6 +14,8 @@ namespace JumpGame
         Normal,
         // 움직이는 발판
         Moving,
+        // 일정 시간 경과 후 사라지는 발판
+        Disappear,
         // 밟으면 사라지는 발판
         StepDisappear,
         // 골인 발판
@@ -47,7 +49,10 @@ namespace JumpGame
         private int _timer = 0;
 
         // 발판이 사라지는 데 걸리는 시간
-        private int _disappearDelay = 20;
+        private int _disappearDelay = 50;
+
+        // 밟은 발판이 사라지는 데 걸리는 시간
+        private int _stepDisappearDelay = 5;
 
         // 발판이 사라진 후 다시 나타나는 시간
         private int _reappearDelay = 100;
@@ -94,7 +99,28 @@ namespace JumpGame
                     _direction = 1;
                 }
             }
-            // 사라지는 발판
+            // 일정 시간 경과 후 사라지는 발판
+            if (Type == PlatformType.Disappear)
+            {
+                    _timer++;
+
+                    // 발판이 사라지도록 설정 된 시간이 같아졌을 때
+                    if (_timer == _disappearDelay)
+                    {
+                        // 발판 비활성화
+                        IsActive = false;
+                    }
+
+                    // 발판이 사라진 이후 지난 시간이 다시 나타나도록 설정 된 시간과 같거나 커졌을 때
+                    if (_timer >= _reappearDelay)
+                    {
+                        // 발판 활성화
+                        IsActive = true;
+                        _timer = 0;
+                    }
+           
+            }
+            // 밟으면 사라지는 발판
             if (Type == PlatformType.StepDisappear)
             {
                 // 발판을 밟았을 때
@@ -103,7 +129,7 @@ namespace JumpGame
                     _timer++;
 
                     // 밟은 이후 시간과 발판이 사라지도록 설정 된 시간이 같아졌을 때
-                    if (_timer == _disappearDelay)
+                    if (_timer == _stepDisappearDelay)
                     {
                         // 발판 비활성화
                         IsActive = false;
@@ -138,7 +164,12 @@ namespace JumpGame
             {
                 brush = Brushes.Orange;
             }
-            // 사라지는 발판 회색
+            // 일정 시간 경과 후 사라지는 발판 파란색
+            if (Type == PlatformType.Disappear)
+            {
+                brush = Brushes.Blue;
+            }
+            // 밟으면 사라지는 발판 회색
             else if (Type == PlatformType.StepDisappear)
             {
                 brush = Brushes.Gray;
