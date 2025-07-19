@@ -55,6 +55,7 @@ namespace JumpGame
             // 발판 리스트 생성
             _platforms = new List<Platform>();
             //폰트 적용
+            LoadCustomFont();
             this.Font = new Font(_fonts.Families[0], 14, FontStyle.Regular);
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
@@ -217,7 +218,7 @@ namespace JumpGame
         // 폰트 추가
         private void LoadCustomFont()
         {
-            string fontPath = Path.Combine(Application.StartupPath, "Font", "Dongle-Regular.ttf");
+            string fontPath = Path.Combine(Application.StartupPath, "Assets", "Font", "Dongle-Regular.ttf");
             _fonts.AddFontFile(fontPath);
         }
     }

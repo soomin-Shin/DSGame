@@ -54,6 +54,7 @@
     <Compile Include="JumpGame.Designer.cs">
       <DependentUpon>JumpGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Effect.cs" />
     <Compile Include="Model\Platform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,7 +79,9 @@
     <EmbeddedResource Include="View\PauseMenuControl.resx">
       <DependentUpon>PauseMenuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Assets\Font\Dongle-Regular.ttf" />
+    <Content Include="Assets\Font\Dongle-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,7 +102,9 @@
     <Content Include="Assets\BGM\bgm.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\BGM\jumpSound.mp3" />
+    <Content Include="Assets\BGM\jumpSound.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Image\Acorn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
