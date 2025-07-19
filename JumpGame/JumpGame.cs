@@ -1,4 +1,5 @@
 ﻿using JumpGame.Model;
+using Raccoon.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,6 +43,8 @@ namespace JumpGame
         PrivateFontCollection _fonts = new PrivateFontCollection();
         // 게임 효과음 관리 객체
         private Effect _gameEffects;
+        //PauseMenu
+        private PauseMenuControl _pauseMenu;
         public JumpGame()                      
         {
             // 게임 화면 너비
@@ -61,7 +64,8 @@ namespace JumpGame
             this.Font = new Font(_fonts.Families[0], 14, FontStyle.Regular);
             // 효과음 추가
             _gameEffects = new Effect();
-
+            // esc 추가
+            PauseMenuSetting();
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
             _platforms.Add(new Platform(new Rectangle(350, 1040, 100, 20), PlatformType.Moving));
@@ -180,13 +184,11 @@ namespace JumpGame
             {
                  if (_isGamePaused)
                 {
-                    _isGamePaused = false;
-                    _gameTimer.Start(); // 게임 재개
+                    ResumeGame();
                 }
                 else
                 {
-                    _isGamePaused = true;
-                    _gameTimer.Stop(); // 게임 일시정지
+                    PauseGame();
                 }
             }
         }
@@ -226,6 +228,44 @@ namespace JumpGame
         {
             string fontPath = $"{Application.StartupPath}//Assets//Font//Dongle-Regular.ttf";
             _fonts.AddFontFile(fontPath);
+        }
+        /// <summary>
+        /// 게임 다시 시작
+        /// </summary>
+        public void ResumeGame()
+        {
+            _isGamePaused = false;
+            _gameTimer.Start(); // 게임 재개
+            _pauseMenu.Visible = false; // 메뉴 숨김
+            this.Focus();
+        }
+        /// <summary>
+        /// 게임 멈춤
+        /// </summary>
+        public void PauseGame()
+        {
+            _isGamePaused = true;
+            _gameTimer.Stop(); // 게임 일시정지
+            _pauseMenu.Visible = true; // 메뉴 표시
+            this.Focus();
+        }
+
+        /// <summary>
+        /// esc 메뉴 세팅 메서드
+        /// </summary>
+        private void PauseMenuSetting()
+        {
+            _pauseMenu = new PauseMenuControl();
+
+            // 중앙 위치 계산
+            int centerX = (this.ClientSize.Width - _pauseMenu.Width) / 2;
+            int centerY = (this.ClientSize.Height - _pauseMenu.Height) / 2;
+
+            _pauseMenu.Location = new Point(centerX, centerY); // 계산된 위치 적용
+            _pauseMenu.Visible = false; // 처음에 보이지 않게 설정
+
+            this.Controls.Add(_pauseMenu); // 폼의 컨트롤 컬렉션에 추가
+            _pauseMenu.BringToFront(); // 다른 컨트롤 위에 표시되도록 가장 앞으로 가져옴
         }
     }
 }

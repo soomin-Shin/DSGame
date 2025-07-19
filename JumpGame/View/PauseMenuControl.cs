@@ -13,10 +13,9 @@ namespace Raccoon.View
     public partial class PauseMenuControl : UserControl
     {
         private string _parentRaccoonForm;
-        public PauseMenuControl(string parentForm)
+        public PauseMenuControl( )
         {
             InitializeComponent();
-            _parentRaccoonForm = parentForm; // 부모 폼 인스턴스 저장
         }
         /// <summary>
         /// 게임 종료
