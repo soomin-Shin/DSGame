@@ -29,6 +29,8 @@ namespace JumpGame
         private bool _rightPressed = false;
         // 점프(스페이스) 버튼 눌렀는지
         private bool _jumpPressed = false;
+        // ESC키 체크
+        private bool _isGamePaused = false;
 
         public JumpGame()                      
         {
@@ -147,6 +149,19 @@ namespace JumpGame
                 {
                     _character.Jump();
                     _jumpPressed = true;
+                }
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                 if (_isGamePaused)
+                {
+                    _isGamePaused = false;
+                    _gameTimer.Start(); // 게임 재개
+                }
+                else
+                {
+                    _isGamePaused = true;
+                    _gameTimer.Stop(); // 게임 일시정지
                 }
             }
         }
