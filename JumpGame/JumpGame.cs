@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,8 @@ namespace JumpGame
         private int _jumpBufferFrames = 5;
         // 점프 입력 버퍼 카운터
         private int _jumpBuffer = 0;
+        //폰트
+        PrivateFontCollection _fonts = new PrivateFontCollection();
 
         public JumpGame()                      
         {
@@ -50,7 +54,8 @@ namespace JumpGame
             _character = new Character(400, 1200);
             // 발판 리스트 생성
             _platforms = new List<Platform>();
-
+            //폰트 적용
+            this.Font = new Font(_fonts.Families[0], 14, FontStyle.Regular);
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
             _platforms.Add(new Platform(new Rectangle(350, 1040, 100, 20), PlatformType.Moving));
@@ -207,6 +212,13 @@ namespace JumpGame
 
             // 캐릭터 그리기
             _character.Draw(g, _camera.X, _camera.Y);
+        }
+
+        // 폰트 추가
+        private void LoadCustomFont()
+        {
+            string fontPath = Path.Combine(Application.StartupPath, "Font", "Dongle-Regular.ttf");
+            _fonts.AddFontFile(fontPath);
         }
     }
 }
