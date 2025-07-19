@@ -55,6 +55,8 @@
       <DependentUpon>JumpGame.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Effect.cs" />
+    <Compile Include="Model\GameStats.cs" />
+    <Compile Include="Model\Obstruction.cs" />
     <Compile Include="Model\Platform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

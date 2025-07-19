@@ -39,12 +39,15 @@ namespace JumpGame
         private int _jumpBufferFrames = 5;
         // 점프 입력 버퍼 카운터
         private int _jumpBuffer = 0;
-        //폰트
+        // 폰트
         PrivateFontCollection _fonts = new PrivateFontCollection();
         // 게임 효과음 관리 객체
         private Effect _gameEffects;
-        //PauseMenu
+        // ESC PauseMenu
         private PauseMenuControl _pauseMenu;
+        // Game 점수, 목숨, 시간
+        private GameStats _gameStats;
+
         public JumpGame()                      
         {
             // 게임 화면 너비
@@ -66,6 +69,9 @@ namespace JumpGame
             _gameEffects = new Effect();
             // esc 추가
             PauseMenuSetting();
+            // 게임 통계 초기화
+            _gameStats = new GameStats();
+
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1150, 130, 20), PlatformType.Normal));
             _platforms.Add(new Platform(new Rectangle(350, 1040, 100, 20), PlatformType.Moving));
@@ -229,6 +235,7 @@ namespace JumpGame
             string fontPath = $"{Application.StartupPath}//Assets//Font//Dongle-Regular.ttf";
             _fonts.AddFontFile(fontPath);
         }
+
         /// <summary>
         /// 게임 다시 시작
         /// </summary>
