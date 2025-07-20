@@ -146,6 +146,8 @@ namespace JumpGame
                 _gameStats = value;
             }
         }
+        // UI 관리 객체 추가
+        private Ui _gameUI;
 
         public JumpGame()                      
         {
@@ -170,6 +172,9 @@ namespace JumpGame
             PauseMenuSetting(this);
             // 게임 통계 초기화
             _gameStats = new GameStats();
+            // UI 객체 초기화 (GameStats와 폰트 패밀리 전달)
+            // 폰트 로드가 완료된 후에 UI 객체를 생성해야 합니다.
+            _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성
 
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1200, 40, 15), PlatformType.Normal));
@@ -333,8 +338,8 @@ namespace JumpGame
             // 캐릭터 그리기
             _character.Draw(g, _camera.X, _camera.Y);
 
-            //Score 그리기
-            DrawScoreUI(g);
+            // UI 요소 그리기
+            _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
         }
 
         // 폰트 추가
@@ -342,36 +347,6 @@ namespace JumpGame
         {
             string fontPath = $"{Application.StartupPath}//Assets//Font//Cinzel-VariableFont_wght.ttf";
             _fonts.AddFontFile(fontPath);
-        }
-
-        /// <summary>
-        /// UI 요소 그리기 메서드
-        /// </summary>
-        private void DrawScoreUI(Graphics g)
-        {
-            // UI 배경 (선택 사항)
-            g.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 0, 0)), 0, this.ClientSize.Height - 60, this.ClientSize.Width, 60);
-
-            // 폰트 설정
-            Font uiFont = new Font(_fonts.Families[0], 20, FontStyle.Bold); // 더 큰 폰트 크기
-            SolidBrush fontBrush = new SolidBrush(Color.White);
-
-            // 점수 표시
-            string scoreText = $"Score: {_gameStats.Score}";
-            g.DrawString(scoreText, uiFont, fontBrush, 10, this.ClientSize.Height - 50);
-
-            // 목숨 표시
-            string livesText = $"Lives: {_gameStats.Lives}";
-            SizeF livesTextSize = g.MeasureString(livesText, uiFont);
-            g.DrawString(livesText, uiFont, fontBrush, this.ClientSize.Width / 2 - livesTextSize.Width / 2, this.ClientSize.Height - 50);
-
-            // 시간 표시
-            string timeText = $"Time: {_gameStats.ElapsedTime.TotalSeconds:F2}초";
-            SizeF timeTextSize = g.MeasureString(timeText, uiFont);
-            g.DrawString(timeText, uiFont, fontBrush, this.ClientSize.Width - timeTextSize.Width - 10, this.ClientSize.Height - 50);
-
-            uiFont.Dispose();
-            fontBrush.Dispose();
         }
 
         /// <summary>
