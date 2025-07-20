@@ -172,10 +172,8 @@ namespace JumpGame
             PauseMenuSetting(this);
             // 게임 통계 초기화
             _gameStats = new GameStats();
-            // UI 객체 초기화 (GameStats와 폰트 패밀리 전달)
-            // 폰트 로드가 완료된 후에 UI 객체를 생성해야 합니다.
+            // UI 객체 초기화 
             _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성
-
             // 발판
             _platforms.Add(new Platform(new Rectangle(400, 1200, 40, 15), PlatformType.Normal));
             _platforms.Add(new Platform(new Rectangle(330, 1150, 40, 15), PlatformType.StepDisappear));
