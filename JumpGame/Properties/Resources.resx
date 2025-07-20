@@ -118,14 +118,77 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Boss" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\Boss.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BossAttack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\BossAttack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BossDead" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\BossDead.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BossFireBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\BossFireBall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BossStage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\BossStage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Emerald" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\image\emerald.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FireBallLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\FireBallLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FireBallRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\FireBallRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\Intro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MagicSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\MagicSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PauseBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\image\pausebackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Platform" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\image\platform.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerAniLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerAniLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerAniLeftSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerAniLeftSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerAniRigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerAniRigh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerAniRightSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerAniRightSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerJumpLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerJumpLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerJumpLeftSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerJumpLeftSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerJumpRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerJumpRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerJumpRightSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerJumpRightSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerLeftSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerLeftSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerRightSword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\PlayerRightSword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Ruby" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\image\ruby.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -138,5 +201,11 @@
   </data>
   <data name="Stage1Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\image\stage1map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SwordEnergy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\SwordEnergy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SwordEnergyLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Image\SwordEnergyLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
