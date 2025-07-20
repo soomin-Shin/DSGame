@@ -1,5 +1,6 @@
 ﻿using JumpGame.Model;
 using JumpGame.View;
+using JumpGame.Stages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,21 @@ namespace JumpGame
         }
         // 발판 리스트
         private List<Platform> _platforms;
+        // 배경 화면
+        private Image _backgroundImage;
+        // 게임 스테이지
+        private JumpStage _jumpstage;
+        public JumpStage Jump
+        {
+            get
+            {
+                return _jumpstage;
+            }
+            set
+            {
+                _jumpstage = value;
+            }
+        }
         // 게임 타이머
         private Timer _gameTimer;
         public Timer GameTimer
@@ -157,12 +173,15 @@ namespace JumpGame
             this.Height = 600;
             // 화면 깜빡임 방지
             this.DoubleBuffered = true;        
+            // 스테이지 초기화
+            _jumpstage = JumpStage.CreateStage();
+            // 발판 리스트 
+            _platforms = _jumpstage.Platforms;
+            _backgroundImage = _jumpstage.BackgroundImage;
+            Point startPos = _jumpstage.StartPosition;
+            _character = new Character(startPos.X, startPos.Y);
             // 카메라 초기화
-            _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height);
-            // 캐릭터 시작 위치
-            _character = new Character(400, 1200);
-            // 발판 리스트 생성
-            _platforms = new List<Platform>();
+            _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);
             // 폰트 적용
             LoadCustomFont();
             this.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);
@@ -173,24 +192,7 @@ namespace JumpGame
             // 게임 통계 초기화
             _gameStats = new GameStats();
             // UI 객체 초기화 
-            _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성
-            // 발판
-            _platforms.Add(new Platform(new Rectangle(400, 1200, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(330, 1150, 40, 15), PlatformType.StepDisappear));
-            _platforms.Add(new Platform(new Rectangle(260, 1100, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(190, 1050, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(120, 1000, 40, 15), PlatformType.Disappear));
-            _platforms.Add(new Platform(new Rectangle(50, 950, 40, 15), PlatformType.Moving));
-            _platforms.Add(new Platform(new Rectangle(120, 900, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(200, 850, 40, 15), PlatformType.StepDisappear));
-            _platforms.Add(new Platform(new Rectangle(280, 800, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(360, 750, 40, 15), PlatformType.Disappear));
-            _platforms.Add(new Platform(new Rectangle(430, 700, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(510, 650, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(580, 600, 40, 15), PlatformType.Moving));
-            _platforms.Add(new Platform(new Rectangle(500, 550, 40, 15), PlatformType.StepDisappear));
-            _platforms.Add(new Platform(new Rectangle(420, 500, 40, 15), PlatformType.Normal));
-            _platforms.Add(new Platform(new Rectangle(300, 400, 40, 40), PlatformType.Goal));
+            _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성         
 
             // 타이머 생성
             _gameTimer = new Timer();                      
@@ -324,8 +326,28 @@ namespace JumpGame
         private void GameForm_Paint(object sender, PaintEventArgs e)    
         {
             Graphics g = e.Graphics;
-            // 배경 색 채우기
-            g.Clear(Color.CornflowerBlue);
+            
+            // 배경 화면을 카메라 에 맞춰 그리기
+            if (_backgroundImage != null)
+            {
+                Rectangle srcRect = new Rectangle(0, _camera.Y, this.ClientSize.Width, this.ClientSize.Height);
+                Rectangle destRect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+
+                if (srcRect.Bottom > _backgroundImage.Height)
+                {
+                    srcRect.Y = _backgroundImage.Height - this.ClientSize.Height;
+                    if (srcRect.Y < 0)
+                    {
+                        srcRect.Y = 0;
+                    }
+                }
+                g.DrawImage(_backgroundImage, destRect, srcRect, GraphicsUnit.Pixel);
+            }
+            else
+            {
+                // 배경 없으면 디폴트 채우기
+                g.Clear(Color.CornflowerBlue);
+            }
 
             // 모든 발판 그리기
             for (int i = 0; i < _platforms.Count; i++)  

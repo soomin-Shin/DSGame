@@ -21,6 +21,9 @@ namespace JumpGame
         // 화면 세로 크기
         private int _screenHeight;
 
+        // 배경 화면 높이
+        private int _worldHeight;
+
         public int X
         {
             get
@@ -46,31 +49,38 @@ namespace JumpGame
         }
 
         // 화면 크기 초기화
-        public Camera(int screenWidth, int screenHeight)
+        public Camera(int screenWidth, int screenHeight, int worldHeight)
         {
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
+            _worldHeight = worldHeight;
         }
 
         // 카메라를 캐릭터 위치 기준으로 조정
         public void CameraUpdate(int targetX, int targetY)
         {
-            // 카메라 X 좌표는 캐릭터 X 좌표 중심에서 화면의 절반
-            X = targetX - _screenWidth / 2;
+            // 좌우 스크롤 필요시 아래 주석 해제, 현재 0 고정
+            _x = 0;
 
             // 카메라 Y 좌표는 캐릭터 Y 좌표 중심에서 화면의 절반
-            Y = targetY - _screenHeight / 2;
+            _y = targetY - _screenHeight / 2;
 
             // 화면의 최상단보다 위로 이동하지 않도록 제한
-            if (Y < 0)
+            if (_y < 0)
             {
-                Y = 0;
+                _y = 0;
+            }
+
+            // 배경 화면 하단 넘어가지 않도록 제한
+            int maxY = _worldHeight - _screenHeight;
+            if (_y > maxY)
+            {
+                _y = maxY;
             }
         }
 
-        /// <summary>
-        /// 카메라 위치를 초기화
-        /// </summary>
+
+        // 카메라 위치를 초기화
         public void CameraReset()
         {
             // 카메라의 X, Y 좌표를 0으로 초기화
