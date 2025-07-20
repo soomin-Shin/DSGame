@@ -73,6 +73,9 @@
     <Content Include="Assets\Image\PauseBackground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Image\Platform.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Image\Ruby.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

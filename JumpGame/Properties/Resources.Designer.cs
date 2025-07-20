@@ -83,6 +83,16 @@ namespace JumpGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Platform {
+            get {
+                object obj = ResourceManager.GetObject("Platform", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ruby {
             get {
                 object obj = ResourceManager.GetObject("Ruby", resourceCulture);
