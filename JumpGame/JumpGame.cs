@@ -64,7 +64,7 @@ namespace JumpGame
             _platforms = new List<Platform>();
             // 폰트 적용
             LoadCustomFont();
-            this.Font = new Font(_fonts.Families[0], 14, FontStyle.Regular);
+            this.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);
             // 효과음 추가
             _gameEffects = new Effect();
             // esc 추가
@@ -241,7 +241,7 @@ namespace JumpGame
         // 폰트 추가
         private void LoadCustomFont()
         {
-            string fontPath = $"{Application.StartupPath}//Assets//Font//Dongle-Regular.ttf";
+            string fontPath = $"{Application.StartupPath}//Assets//Font//Cinzel-VariableFont_wght.ttf";
             _fonts.AddFontFile(fontPath);
         }
 
