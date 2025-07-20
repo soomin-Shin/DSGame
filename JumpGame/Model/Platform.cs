@@ -129,7 +129,7 @@ namespace JumpGame
                     _timer++;
 
                     // 밟은 이후 시간과 발판이 사라지도록 설정 된 시간이 같아졌을 때
-                    if (_timer == _disappearDelay)
+                    if (_timer == _stepDisappearDelay)
                     {
                         // 발판 비활성화
                         IsActive = false;

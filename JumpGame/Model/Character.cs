@@ -81,7 +81,7 @@ namespace JumpGame
             if (_onGround == true)
             {
                 // 위쪽으로 속도 부여
-                _velocityY = -7.5f;
+                _velocityY = -12;
                 _onGround = false;
             }
         }
@@ -159,9 +159,8 @@ namespace JumpGame
         {
             g.FillRectangle(Brushes.Green, _x - offsetX, _y - offsetY, _width, _height);
         }
-        /// <summary>
-        /// 캐릭터 상태를 초기화합니다.
-        /// </summary>
+
+        // 캐릭터 상태를 초기화
         public void CharacterReset()
         {
             _x = 400;
