@@ -165,6 +165,9 @@ namespace JumpGame
         // UI 관리 객체 추가
         private Ui _gameUI;
 
+        // 점프 스테이지 클리어
+        private bool _jumpStageClear = false;
+
         public JumpGame()                      
         {
             // 폼 사이즈 변경 불가
@@ -240,6 +243,7 @@ namespace JumpGame
                 _character.MoveRight();
             }
 
+
             // 모든 발판 리스트 순서대로 업데이트
             for (int i = 0; i < _platforms.Count; i++)      
             {
@@ -263,17 +267,16 @@ namespace JumpGame
                     // 캐릭터 히트박스를 charRect에 저장
                     Rectangle charRect = _character.GetHitBox();
 
-                    // 캐릭터 히트박스가 골인 발판의 영역과 겹쳤을 때
-                    if (charRect.IntersectsWith(goalRect) == true)
+                    // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
+                    bool isOnGoal = charRect.Bottom == goalRect.Top;
+
+
+                    if (isOnGoal == true)
                     {
-                        // 게임 타이머 멈춤
-                        _gameTimer.Stop();
-                        // 메세지 출력
-                        string message = "골인 지점에 도달했습니다!\n걸린 시간: " + _gameStats.ElapsedTime.TotalSeconds.ToString("F2") + "초";
-                        MessageBox.Show(message, "게임 종료");
-                        this.Close();
-                        break; 
+                        _jumpStageClear = true;
+                        break;
                     }
+
                 }
             }
             // 게임 시간 업데이트
@@ -300,13 +303,24 @@ namespace JumpGame
             }
             if (e.KeyCode == Keys.Escape)
             {
-                 if (_isGamePaused)
+                 if (_isGamePaused == true)
                 {
                     ResumeGame();
                 }
                 else
                 {
                     PauseGame();
+                }
+            }
+            // 방향키 위키를 눌렀을 때 조건을 만족하면 클리어
+            if (e.KeyCode == Keys.Up)
+            {
+                if (_jumpStageClear == true)
+                {
+                    _gameTimer.Stop();
+                    string message = "골인 지점에 도달했습니다!\n걸린 시간: " + _gameStats.ElapsedTime.TotalSeconds.ToString("F2") + "초";
+                    MessageBox.Show(message, "게임 종료");
+                    this.Close();
                 }
             }
         }
