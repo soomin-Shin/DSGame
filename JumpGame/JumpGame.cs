@@ -1,5 +1,5 @@
 ﻿using JumpGame.Model;
-using Raccoon.View;
+using JumpGame.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,26 +19,114 @@ namespace JumpGame
     {   
         // 카메라
         private Camera _camera;
+        public Camera Camera
+        {
+            get
+            {
+                return _camera;
+            }
+            set
+            {
+                _camera = value;
+            }
+        }
         // 캐릭터
         private Character _character;
+        public Character Character
+        {
+            get
+            {
+                return _character;
+            }
+            set
+            {
+                _character = value;
+            }
+        }
         // 발판 리스트
         private List<Platform> _platforms;
         // 게임 타이머
         private Timer _gameTimer;
+        public Timer GameTimer
+        {
+            get
+            {
+                return _gameTimer;
+            }
+            set
+            {
+                _gameTimer = value;
+            }
+        }
         // 게임 시작 시간
         private DateTime _startTime;
+        public DateTime StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                _startTime = value;
+            }
+        }
         // 왼쪽 버튼 눌렀는지
         private bool _leftPressed = false;
+        public bool LeftPressed
+        {
+            get
+            {
+                return _leftPressed;
+            }
+            set
+            {
+                _leftPressed = value;
+            }
+        }
         // 오른쪽 버튼 눌렀는지
         private bool _rightPressed = false;
+        public bool RightPressed
+        {
+            get
+            {
+                return _rightPressed;
+            }
+            set
+            {
+                _rightPressed = value;
+            }
+        }
         // 점프(스페이스) 버튼 눌렀는지
         private bool _jumpPressed = false;
         // ESC키 체크
         private bool _isGamePaused = false;
+        public bool IsGamePaused
+        {
+            get
+            {
+                return _isGamePaused;
+            }
+            set
+            {
+                _isGamePaused = value;
+            }
+        }
         // 점프 입력 버퍼 프레임 수
         private int _jumpBufferFrames = 5;
         // 점프 입력 버퍼 카운터
         private int _jumpBuffer = 0;
+        public int JumpBuffer
+        {
+            get
+            {
+                return _jumpBuffer;
+            }
+            set
+            {
+                _jumpBuffer = value;
+            }
+        }
         // 폰트
         PrivateFontCollection _fonts = new PrivateFontCollection();
         // 게임 효과음 관리 객체
@@ -47,6 +135,17 @@ namespace JumpGame
         private PauseMenuControl _pauseMenu;
         // Game 점수, 목숨, 시간
         private GameStats _gameStats;
+        public GameStats GameStats
+        {
+            get
+            {
+                return _gameStats;
+            }
+            set
+            {
+                _gameStats = value;
+            }
+        }
 
         public JumpGame()                      
         {
@@ -68,7 +167,7 @@ namespace JumpGame
             // 효과음 추가
             _gameEffects = new Effect();
             // esc 추가
-            PauseMenuSetting();
+            PauseMenuSetting(this);
             // 게임 통계 초기화
             _gameStats = new GameStats();
 
@@ -299,9 +398,9 @@ namespace JumpGame
         /// <summary>
         /// esc 메뉴 세팅 메서드
         /// </summary>
-        private void PauseMenuSetting()
+        private void PauseMenuSetting(JumpGame jumpGame)
         {
-            _pauseMenu = new PauseMenuControl();
+            _pauseMenu = new PauseMenuControl(jumpGame);
 
             // 중앙 위치 계산
             int centerX = (this.ClientSize.Width - _pauseMenu.Width) / 2;
@@ -313,5 +412,7 @@ namespace JumpGame
             this.Controls.Add(_pauseMenu); // 폼의 컨트롤 컬렉션에 추가
             _pauseMenu.BringToFront(); // 다른 컨트롤 위에 표시되도록 가장 앞으로 가져옴
         }
+
+
     }
 }

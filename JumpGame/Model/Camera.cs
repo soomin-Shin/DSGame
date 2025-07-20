@@ -67,5 +67,15 @@ namespace JumpGame
                 Y = 0;
             }
         }
+
+        /// <summary>
+        /// 카메라 위치를 초기화
+        /// </summary>
+        public void CameraReset()
+        {
+            // 카메라의 X, Y 좌표를 0으로 초기화
+            _x = 0;
+            _y = 0;
+        }
     }
 }

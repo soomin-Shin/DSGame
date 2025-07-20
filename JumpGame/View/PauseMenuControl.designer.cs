@@ -1,4 +1,4 @@
-﻿namespace Raccoon.View
+﻿namespace JumpGame.View
 {
     partial class PauseMenuControl
     {

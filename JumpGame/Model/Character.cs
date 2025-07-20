@@ -10,7 +10,7 @@ namespace JumpGame
     public class Character
     {
         // 캐릭터 X 좌표
-        private int _x;
+        private int _x = 400;
 
         // 캐릭터 Y 좌표
         private int _y;
@@ -158,6 +158,16 @@ namespace JumpGame
         public void Draw(Graphics g, int offsetX, int offsetY)
         {
             g.FillRectangle(Brushes.Green, _x - offsetX, _y - offsetY, _width, _height);
+        }
+        /// <summary>
+        /// 캐릭터 상태를 초기화합니다.
+        /// </summary>
+        public void CharacterReset()
+        {
+            _x = 400;
+            _y = _initialY;
+            _velocityY = 0;
+            _onGround = false;
         }
     }
 }

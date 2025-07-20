@@ -46,5 +46,14 @@ namespace JumpGame.Model
                 _elapsedTime = value;
             }
         }
+        /// <summary>
+        /// 정보 리셋
+        /// </summary>
+        public void StatsReset()
+        {
+            this._score = 0;
+            this._lives = 3;
+            this._elapsedTime = TimeSpan.Zero;
+        }
     }
 }

@@ -8,14 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Raccoon.View
+namespace JumpGame.View
 {
     public partial class PauseMenuControl : UserControl
     {
-        private string _parentRaccoonForm;
-        public PauseMenuControl( )
+        private JumpGame _parentJumpGameForm;
+        public PauseMenuControl(JumpGame parentForm)
         {
             InitializeComponent();
+            _parentJumpGameForm = parentForm;
         }
         /// <summary>
         /// 게임 종료
@@ -33,10 +34,25 @@ namespace Raccoon.View
         /// <param name="e"></param>
         private void btnRestart_Click(object sender, EventArgs e)
         {
-            //_parentRaccoonForm._Character.reSet();
-            //_parentRaccoonForm._Obstruction.reSet();
-            //_parentRaccoonForm._Enemy.reSet();
-            //_parentRaccoonForm.ResumeGame();
+            RestartGame();
+        }
+
+        /// <summary>
+        /// 게임을 완전히 초기 상태로 재시작합니다.
+        /// </summary>
+        public void RestartGame()
+        {
+            // 게임 상태 초기화
+            _parentJumpGameForm.Camera.CameraReset();
+            _parentJumpGameForm.Character.CharacterReset();
+            _parentJumpGameForm.GameStats.StatsReset();
+            _parentJumpGameForm.StartTime = DateTime.Now; // 경과 시간 리셋
+
+            // 게임 플레이 관련 변수 초기화
+            _parentJumpGameForm.LeftPressed = false;
+            _parentJumpGameForm.RightPressed = false;
+            _parentJumpGameForm.JumpBuffer = 0;
+            _parentJumpGameForm.ResumeGame();
         }
     }
 }
