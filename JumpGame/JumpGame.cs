@@ -167,6 +167,8 @@ namespace JumpGame
 
         public JumpGame()                      
         {
+            // 폼 사이즈 변경 불가
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             // 게임 화면 너비
             this.Width = 800;
             // 게임 화면 높이

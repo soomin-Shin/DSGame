@@ -73,30 +73,27 @@ namespace JumpGame.Stages
             // 발판 목록 정의(아래에 각 발판 좌표/종류를 배열에 추가)
             var _platforms = new List<Platform>()
             {
-                // Rectangle(x, y, width, height), PlatformType
-                new Platform(new Rectangle(400, 1200, 40, 15), PlatformType.Normal),           // 일반 발판
-                new Platform(new Rectangle(330, 1150, 40, 15), PlatformType.StepDisappear),    // 밟으면 사라지는 발판
-                new Platform(new Rectangle(260, 1100, 40, 15), PlatformType.Normal),           // 일반 발판
-                new Platform(new Rectangle(190, 1050, 40, 15), PlatformType.Normal),           // 일반 발판
-                new Platform(new Rectangle(120, 1000, 40, 15), PlatformType.StepDisappear),    // 사라지는 발판
-                new Platform(new Rectangle(50, 950, 40, 15), PlatformType.Moving),             // 움직이는 발판
-                new Platform(new Rectangle(120, 900, 40, 15), PlatformType.Normal),            // 일반 발판
-                new Platform(new Rectangle(200, 850, 40, 15), PlatformType.StepDisappear),     // 사라지는 발판
-                new Platform(new Rectangle(280, 800, 40, 15), PlatformType.Normal),            // 일반 발판
-                new Platform(new Rectangle(360, 750, 40, 15), PlatformType.StepDisappear),     // 사라지는 발판
-                new Platform(new Rectangle(430, 700, 40, 15), PlatformType.Normal),            // 일반 발판
-                new Platform(new Rectangle(510, 650, 40, 15), PlatformType.Normal),            // 일반 발판
-                new Platform(new Rectangle(580, 600, 40, 15), PlatformType.Moving),            // 움직이는 발판
-                new Platform(new Rectangle(500, 550, 40, 15), PlatformType.StepDisappear),     // 사라지는 발판
-                new Platform(new Rectangle(420, 500, 40, 15), PlatformType.Normal),            // 일반 발판
-                new Platform(new Rectangle(300, 400, 40, 40), PlatformType.Goal)               // 골인(노란색 정사각형)
+                // (x, y, width, height), PlatformType
+                new Platform(new Rectangle(225, 1430, 155, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(475, 1300, 155, 20), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(55, 1300, 120, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(300, 1140, 155, 20), PlatformType.Normal),          
+                new Platform(new Rectangle(655, 1140, 120, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(120, 980, 155, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(480, 980, 150, 20), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(300, 820, 150, 20), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(555, 690, 155, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(150, 625, 153, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(400, 500, 155, 20), PlatformType.Normal),           
+                new Platform(new Rectangle(150, 370, 150, 20), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(330, 240, 175, 20), PlatformType.Goal)               
             };
 
             //  배경 화면 로드
             Image _backgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
 
             // 플레이어 시작 위치
-            Point _startPosition = new Point(400, 1500);
+            Point _startPosition = new Point(400, 1380);
 
             return new JumpStage(_platforms, _backgroundImage, _startPosition);
         }
