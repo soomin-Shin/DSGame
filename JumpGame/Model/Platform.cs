@@ -30,6 +30,9 @@ namespace JumpGame
         // 발판 종류
         public PlatformType Type;
 
+        // 발판 사진
+        private Image _platformImage;
+
         // 발판 활성화 여부
         public bool IsActive = true;
 
@@ -60,6 +63,18 @@ namespace JumpGame
         // 발판을 밟았는지 여부
         private bool _stepped = false;
 
+        public Image PlatformImage
+        {
+            get
+            {
+                return _platformImage;
+            }
+            set
+            {
+                _platformImage = value;
+            }
+        }
+
         public Platform(Rectangle area, PlatformType type)
         {
             Area = area;
@@ -69,6 +84,9 @@ namespace JumpGame
             {
                 _startX = area.X;
             }
+
+            // 발판 사진 로드
+            _platformImage = Image.FromFile("Assets/Image/Platform.png");
         }
 
         // 캐릭터가 발판을 밟았을 때
@@ -156,31 +174,80 @@ namespace JumpGame
                 return;
             }
 
-            //기본 발판 갈색
-            Brush brush = Brushes.Brown;
+            // 기본 발판 그리기
+            if (Type == PlatformType.Normal)
+            {
+                // 발판 사진이 존재 할 경우 발판 사진으로 사용
+                if (_platformImage != null)
+                {
+                    g.DrawImage(_platformImage, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+                else
+                {
+                    // 발판 사진이 없다면 갈색 사각형으로 대체
+                    g.FillRectangle(Brushes.Brown, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+            }
 
-            //움직이는 발판 주황색
+            // 움직이는 발판 그리기
             if (Type == PlatformType.Moving)
             {
-                brush = Brushes.Orange;
-            }
-            // 일정 시간 경과 후 사라지는 발판 파란색
-            if (Type == PlatformType.Disappear)
-            {
-                brush = Brushes.Blue;
-            }
-            // 사라지는 발판 회색
-            else if (Type == PlatformType.StepDisappear)
-            {
-                brush = Brushes.Gray;
-            }
-            // 골인 발판 노란색
-            else if (Type == PlatformType.Goal)
-            {
-                brush = Brushes.Yellow;
+                // 발판 사진이 존재 할 경우 발판 사진으로 사용
+                if (_platformImage != null)
+                {
+                    g.DrawImage(_platformImage, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+                else
+                {
+                    // 발판 사진이 없다면 주황색 사각형으로 대체
+                    g.FillRectangle(Brushes.Orange, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
             }
 
-            g.FillRectangle(brush, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+            // 일정 시간 경과 후 사라지는 발판 그리기
+            if (Type == PlatformType.Disappear)
+            {
+                // 발판 사진이 존재 할 경우 발판 사진으로 사용
+                if (_platformImage != null)
+                {
+                    g.DrawImage(_platformImage, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+                else
+                {
+                    // 발판 사진이 없다면 파란색 사각형으로 대체
+                    g.FillRectangle(Brushes.Blue, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+            }
+
+            // 밟으면 사라지는 발판 그리기
+            if (Type == PlatformType.StepDisappear)
+            {
+                // 발판 사진이 존재 할 경우 발판 사진으로 사용
+                if (_platformImage != null)
+                {
+                    g.DrawImage(_platformImage, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+                else
+                {
+                    // 발판 사진이 없다면 회색 사각형으로 대체
+                    g.FillRectangle(Brushes.Gray, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+            }
+
+            // 골인 발판 그리기
+            if (Type == PlatformType.Goal)
+            {
+                // 발판 사진이 존재 할 경우 발판 사진으로 사용
+                if (_platformImage != null)
+                {
+                    g.DrawImage(_platformImage, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+                else
+                {
+                    // 발판 사진이 없다면 노란 사각형으로 대체
+                    g.FillRectangle(Brushes.Yellow, Area.X - offsetX, Area.Y - offsetY, Area.Width, Area.Height);
+                }
+            }
         }
     }
 }

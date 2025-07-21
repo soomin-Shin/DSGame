@@ -74,26 +74,26 @@ namespace JumpGame.Stages
             var _platforms = new List<Platform>()
             {
                 // (x, y, width, height), PlatformType
-                new Platform(new Rectangle(225, 1430, 155, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(475, 1300, 155, 20), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(55, 1300, 120, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(300, 1140, 155, 20), PlatformType.Normal),          
-                new Platform(new Rectangle(655, 1140, 120, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(120, 980, 155, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(480, 980, 150, 20), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(300, 820, 150, 20), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(555, 690, 155, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(150, 625, 153, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(400, 500, 155, 20), PlatformType.Normal),           
-                new Platform(new Rectangle(150, 370, 150, 20), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(330, 240, 175, 20), PlatformType.Goal)               
+                new Platform(new Rectangle(220, 1420, 165, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(475, 1290, 160, 45), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(55, 1290, 125, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(295, 1130, 165, 45), PlatformType.Normal),          
+                new Platform(new Rectangle(650, 1130, 130, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(120, 970, 160, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(475, 970, 160, 45), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(295, 810, 160, 45), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(550, 680, 160, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(145, 615, 160, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(395, 485, 165, 45), PlatformType.Normal),           
+                new Platform(new Rectangle(150, 360, 155, 45), PlatformType.StepDisappear),    
+                new Platform(new Rectangle(320, 228, 190, 45), PlatformType.Goal)               
             };
 
             //  배경 화면 로드
             Image _backgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
 
             // 플레이어 시작 위치
-            Point _startPosition = new Point(300, 1380);
+            Point _startPosition = new Point(300, 1370);
 
             return new JumpStage(_platforms, _backgroundImage, _startPosition);
         }
