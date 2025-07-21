@@ -33,7 +33,7 @@ namespace JumpGame.View
         public void DrawScoreUI(Graphics g, int clientWidth, int clientHeight)
         {
             // UI 배경
-            g.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 0, 0)), 0, clientHeight - 60, clientWidth, 60);
+            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0, 0)), 0, clientHeight - 60, clientWidth, 60);
 
             // 폰트 설정
             Font uiFont = new Font(_uiFontFamily, 20, FontStyle.Bold); // 폰트 크기
