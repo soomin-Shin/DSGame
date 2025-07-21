@@ -93,7 +93,7 @@ namespace JumpGame.Stages
             Image _backgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
 
             // 플레이어 시작 위치
-            Point _startPosition = new Point(400, 1380);
+            Point _startPosition = new Point(300, 1380);
 
             return new JumpStage(_platforms, _backgroundImage, _startPosition);
         }
