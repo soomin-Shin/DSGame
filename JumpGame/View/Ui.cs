@@ -44,7 +44,7 @@ namespace JumpGame.View
             g.DrawString(scoreText, uiFont, fontBrush, 10, clientHeight - 50);
 
             // 목숨 표시
-            string livesText = $"Lives: {_gameStats.Lives}";
+            string livesText = $"Life: {_gameStats.Lives}";
             SizeF livesTextSize = g.MeasureString(livesText, uiFont);
             g.DrawString(livesText, uiFont, fontBrush, clientWidth / 2 - livesTextSize.Width / 2, clientHeight - 50);
 
