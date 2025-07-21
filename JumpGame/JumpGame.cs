@@ -128,9 +128,9 @@ namespace JumpGame
                 _isGamePaused = value;
             }
         }
-        // 점프 입력 버퍼 프레임 수
+        // 점프 입력 버퍼 프레임
         private int _jumpBufferFrames = 5;
-        // 점프 입력 버퍼 카운터
+        // 점프 입력 버퍼
         private int _jumpBuffer = 0;
         public int JumpBuffer
         {
@@ -218,6 +218,7 @@ namespace JumpGame
         private void GameTimer_Tick(object sender, EventArgs e)   
         {
             // 점프 입력 버퍼 관리
+            // https://m.blog.naver.com/sorang226/223083889817
             if (_jumpBuffer > 0)
             {
                 _jumpBuffer--;
@@ -301,10 +302,10 @@ namespace JumpGame
             {
                 _rightPressed = true;
             }
-            // 점프키는 착지 상태일 때만 한 번 눌림으로 인식
             if (e.KeyCode == Keys.Space)
             {
                 _jumpBuffer = _jumpBufferFrames;
+
             }
             if (e.KeyCode == Keys.Escape)
             {
