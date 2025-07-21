@@ -68,36 +68,78 @@
       <DependentUpon>PauseMenuControl.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Ui.cs" />
-    <Content Include="Assets\Image\Boss.png" />
-    <Content Include="Assets\Image\BossAttack.png" />
-    <Content Include="Assets\Image\BossDead.png" />
-    <Content Include="Assets\Image\BossFireBall.png" />
-    <Content Include="Assets\Image\BossStage.png" />
+    <Content Include="Assets\Image\Boss.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\BossAttack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\BossDead.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\BossFireBall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\BossStage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Image\Emerald.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Image\FireBallLeft.png" />
-    <Content Include="Assets\Image\FireBallRight.png" />
-    <Content Include="Assets\Image\Intro.png" />
-    <Content Include="Assets\Image\MagicSword.png" />
+    <Content Include="Assets\Image\FireBallLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\FireBallRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\Intro.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\MagicSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Image\PauseBackground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Image\Platform.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Image\PlayerAniLeft.png" />
-    <Content Include="Assets\Image\PlayerAniLeftSword.png" />
-    <Content Include="Assets\Image\PlayerAniRigh.png" />
-    <Content Include="Assets\Image\PlayerAniRightSword.png" />
-    <Content Include="Assets\Image\PlayerJumpLeft.png" />
-    <Content Include="Assets\Image\PlayerJumpLeftSword.png" />
-    <Content Include="Assets\Image\PlayerJumpRight.png" />
-    <Content Include="Assets\Image\PlayerJumpRightSword.png" />
-    <Content Include="Assets\Image\PlayerLeft.png" />
-    <Content Include="Assets\Image\PlayerLeftSword.png" />
-    <Content Include="Assets\Image\PlayerRight.png" />
-    <Content Include="Assets\Image\PlayerRightSword.png" />
+    <Content Include="Assets\Image\PlayerAniLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerAniLeftSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerAniRigh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerAniRightSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerJumpLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerJumpLeftSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerJumpRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerJumpRightSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerLeftSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\PlayerRightSword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Image\Ruby.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -110,8 +152,12 @@
     <Content Include="Assets\Image\Stage1Map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Image\SwordEnergy.png" />
-    <Content Include="Assets\Image\SwordEnergyLeft.png" />
+    <Content Include="Assets\Image\SwordEnergy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\SwordEnergyLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="JumpGame.resx">
       <DependentUpon>JumpGame.cs</DependentUpon>
     </EmbeddedResource>
