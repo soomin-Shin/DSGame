@@ -48,7 +48,7 @@ namespace JumpGame
         private List<Platform> _platforms;
         // 배경 화면
         private Image _backgroundImage;
-        // 게임 스테이지
+        // 점프 스테이지
         private JumpStage _jumpstage;
         public JumpStage Jumpstage
         {
@@ -229,6 +229,12 @@ namespace JumpGame
                 _character.Jump();
                 _gameEffects.PlayJumpSound();
                 _jumpBuffer = 0;
+            }
+
+            // 점프 스테이지에서 낙사 시 리셋
+            if (_character.GetY() > _jumpstage.GetY() + 100)
+            {
+                _jumpstage.JumpStageReset(_character);
             }
 
             // 왼쪽으로 이동

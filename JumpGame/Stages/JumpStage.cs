@@ -103,5 +103,11 @@ namespace JumpGame.Stages
 
             return new JumpStage(_platforms, _backgroundImage, startX, startY);
         }
+
+        // 점프 스테이지 캐릭터 초기화
+        public void JumpStageReset(Character character)
+        {
+            character.CharacterReset(_x, _y);
+        }
     }
 }

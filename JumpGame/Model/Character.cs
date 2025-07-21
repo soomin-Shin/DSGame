@@ -16,9 +16,6 @@ namespace JumpGame
         // 캐릭터 Y 좌표
         private int _y;
 
-        // 캐릭터 초기 Y 좌표
-        private int _initialY;
-
         // 캐릭터의 너비
         private int _width = 30;
 
@@ -37,14 +34,6 @@ namespace JumpGame
         // 좌우 이동 속도
         private int _moveSpeed = 5;
 
-        public Character(int startX, int startY)
-        {
-            _x = startX;
-            _y = startY;
-            // 초기 Y 좌표 저장
-            _initialY = startY;      
-        }
-
         // 캐릭터 X 좌표
         public int GetX()
         {
@@ -57,6 +46,11 @@ namespace JumpGame
             return _y;
         }
 
+        public Character(int startX, int startY)
+        {
+            _x = startX;
+            _y = startY;
+        }
 
         // 캐릭터 히트 박스
         public Rectangle GetHitBox()
@@ -154,13 +148,6 @@ namespace JumpGame
                     }
                 }
             }
-
-            // 캐릭터 Y좌표가 초기 위치 보다 낮아진 경우
-            if (_y > _initialY + 100)
-            {
-                // 상태 초기화
-                CharacterReset();
-            }
         }
 
         // 캐릭터 그림
@@ -170,10 +157,10 @@ namespace JumpGame
         }
 
         // 캐릭터 상태를 초기화
-        public void CharacterReset()
+        public void CharacterReset(int x, int y)
         {
-            _x = 300;
-            _y = _initialY;
+            _x = x;
+            _y = y;
             _velocityY = 0;
             _onGround = true;
         }
