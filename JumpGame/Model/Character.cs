@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using JumpGame.Model;
 
 namespace JumpGame
 {
     public class Character
     {
         // 캐릭터 X 좌표
-        private int _x = 400;
+        private int _x;
 
         // 캐릭터 Y 좌표
         private int _y;
@@ -36,7 +37,6 @@ namespace JumpGame
         // 좌우 이동 속도
         private int _moveSpeed = 5;
 
-        // 캐릭터 초기 좌표 지정
         public Character(int startX, int startY)
         {
             _x = startX;
@@ -57,6 +57,7 @@ namespace JumpGame
             return _y;
         }
 
+
         // 캐릭터 히트 박스
         public Rectangle GetHitBox()
         {
@@ -67,12 +68,24 @@ namespace JumpGame
         public void MoveLeft()
         {
             _x = _x - _moveSpeed;
+
+            // 벽 바깥으로 빠져나가지 못하게 제한
+            if (_x < 55)
+            {
+                _x = 55;
+            }
         }
 
         // 오른쪽으로 이동
         public void MoveRight()
         {
             _x = _x + _moveSpeed;
+
+            // 벽 바깥으로 빠져나가지 못하게 제한
+            if (_x > 780 - _width)
+            {
+                _x = 780 - _width;
+            }
         }
 
         // 점프
@@ -142,15 +155,11 @@ namespace JumpGame
                 }
             }
 
-            // 캐릭터 최초 Y좌표보다 더 아래로 내려가지 않도록 제한
-            if (_y > _initialY)
+            // 캐릭터 Y좌표가 초기 위치 보다 낮아진 경우
+            if (_y > _initialY + 100)
             {
-                // Y 위치를 초기 위치로 고정
-                _y = _initialY;
-                // 수직 속도 제거
-                _velocityY = 0;
-                // 착지 상태로 설정
-                _onGround = true;  
+                // 상태 초기화
+                CharacterReset();
             }
         }
 
@@ -163,10 +172,10 @@ namespace JumpGame
         // 캐릭터 상태를 초기화
         public void CharacterReset()
         {
-            _x = 400;
+            _x = 300;
             _y = _initialY;
             _velocityY = 0;
-            _onGround = false;
+            _onGround = true;
         }
     }
 }
