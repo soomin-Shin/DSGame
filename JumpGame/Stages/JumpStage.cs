@@ -4,19 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using JumpGame.Model;
 
 namespace JumpGame.Stages
 {
     public class JumpStage
     {
+        // JumpStage 캐릭터 X 좌표
+        private int _x;
+
+        // JumpStage 캐릭터 Y 좌표
+        private int _y;
+
         // 발판 리스트
         private List<Platform> _platforms;
 
         // 배경 화면
         private Image _backgroundImage;
 
-        // 캐릭터 시작 위치
-        private Point _startPosition;
 
         public List<Platform> Platforms
         {
@@ -42,29 +47,29 @@ namespace JumpGame.Stages
             }
         }
 
-        public Point StartPosition
+        // 캐릭터 X 좌표
+        public int GetX()
         {
-            get
-            {
-                return _startPosition;
-            }
-            set
-            {
-                _startPosition = value;
-            }
+            return _x;
+        }
+
+        // 캐릭터 Y 좌표
+        public int GetY()
+        {
+            return _y;
         }
 
 
 
         // Stage 생성자
-        public JumpStage(List<Platform> platforms, Image bg, Point start)
+        public JumpStage(List<Platform> platforms, Image bg, int startX, int startY)
         {
             // 발판 리스트
             _platforms = platforms;
             // 배경 화면
             _backgroundImage = bg;
-            // 시작 위치 지정
-            _startPosition = start;                 
+            _x = startX;
+            _y = startY;
         }
 
         // 스테이지 생성 함수
@@ -93,9 +98,10 @@ namespace JumpGame.Stages
             Image _backgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
 
             // 플레이어 시작 위치
-            Point _startPosition = new Point(300, 1370);
+            int startX = 300;
+            int startY = 1360;
 
-            return new JumpStage(_platforms, _backgroundImage, _startPosition);
+            return new JumpStage(_platforms, _backgroundImage, startX, startY);
         }
     }
 }

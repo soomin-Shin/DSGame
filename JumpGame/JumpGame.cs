@@ -183,8 +183,7 @@ namespace JumpGame
             // 발판 리스트 
             _platforms = Jumpstage.Platforms;
             _backgroundImage = Jumpstage.BackgroundImage;
-            Point startPos = Jumpstage.StartPosition;
-            _character = new Character(startPos.X, startPos.Y);
+            _character = new Character(_jumpstage.GetX(), _jumpstage.GetY());
             // 카메라 초기화
             _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);
             // 폰트 적용
