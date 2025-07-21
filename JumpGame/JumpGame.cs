@@ -50,7 +50,7 @@ namespace JumpGame
         private Image _backgroundImage;
         // 게임 스테이지
         private JumpStage _jumpstage;
-        public JumpStage Jump
+        public JumpStage Jumpstage
         {
             get
             {
@@ -177,13 +177,13 @@ namespace JumpGame
             // 게임 화면 높이
             this.Height = 600;
             // 화면 깜빡임 방지
-            this.DoubleBuffered = true;        
+            this.DoubleBuffered = true;
             // 스테이지 초기화
-            _jumpstage = JumpStage.CreateStage();
+            Jumpstage = JumpStage.CreateStage();
             // 발판 리스트 
-            _platforms = _jumpstage.Platforms;
-            _backgroundImage = _jumpstage.BackgroundImage;
-            Point startPos = _jumpstage.StartPosition;
+            _platforms = Jumpstage.Platforms;
+            _backgroundImage = Jumpstage.BackgroundImage;
+            Point startPos = Jumpstage.StartPosition;
             _character = new Character(startPos.X, startPos.Y);
             // 카메라 초기화
             _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);
