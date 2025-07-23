@@ -8,27 +8,27 @@ namespace JumpGame
     /// </summary>
     public class Projectile
     {
-        private Image fireImage;
-        private Point position;
-        private int speed;
-        private bool isActive;
-        private int initialX; // 초기 X 위치를 저장할 변수 추가
+        private Image _projectileImage;
+        private Point _position;
+        private int _speed;
+        private bool _isActive;
+        private int _initialX; // 초기 X 위치를 저장할 변수 추가
         /// <summary>
         /// 불꽃의 현재 위치를 가져오거나 설정
         /// </summary>
-        public Point _Position
+        public Point Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return _position; }
+            set { _position = value; }
         }
 
         /// <summary>
         /// 불꽃의 활성화 상태를 가져오거나 설정
         /// </summary>
-        public bool _IsActive
+        public bool IsActive
         {
-            get { return isActive; }
-            set { isActive = value; }
+            get { return _isActive; }
+            set { _isActive = value; }
         }
 
         /// <summary>
@@ -40,11 +40,11 @@ namespace JumpGame
         /// <param name="image">사용할 불꽃 이미지입니다.</param>
         public Projectile(int startX, int startY, int fireSpeed, Image image)
         {
-            this.position = new Point(startX, startY);
-            this.initialX = startX; // 초기 X 저장
-            this.speed = fireSpeed;
-            this.fireImage = image;
-            this.isActive = true;
+            this._position = new Point(startX, startY);
+            this._initialX = startX; // 초기 X 저장
+            this._speed = fireSpeed;
+            this._projectileImage = image;
+            this._isActive = true;
         }
 
         /// <summary>
@@ -53,17 +53,17 @@ namespace JumpGame
         /// <returns>불꽃이 화면을 벗어나 비활성화되었는지 여부를 반환</returns>
         public bool Update()
         {
-            if (isActive)
+            if (_isActive)
             {
-                position.X -= speed; // 왼쪽으로 이동
+                _position.X -= _speed; // 왼쪽으로 이동
 
                 // 불꽃이 화면 왼쪽 끝(X=0)을 벗어나면 비활성화
-                if (position.X + fireImage.Width < 0)
+                if (_projectileImage.X + _projectileImage.Width < 0)
                 {
-                    isActive = false;
+                    _isActive = false;
                 }
             }
-            return isActive;
+            return _isActive;
         }
 
         /// <summary>
@@ -72,16 +72,16 @@ namespace JumpGame
         /// <param name="g">.</param>
         public void FireBallDraw(Graphics g)
         {
-            if (isActive && fireImage != null)
+            if (_isActive && _projectileImage != null)
             {
-                g.DrawImage(fireImage, position);
+                g.DrawImage(_projectileImage, _position);
             }
         }
 
         internal void Reset()
         {
-            this.position = new Point(initialX, this.position.Y); // 저장된 초기 X로 리셋
-            this.isActive = true;
+            this._position = new Point(_initialX, this._position.Y); // 저장된 초기 X로 리셋
+            this._isActive = true;
         }
     }
 }
