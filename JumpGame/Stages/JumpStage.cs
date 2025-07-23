@@ -59,12 +59,6 @@ namespace JumpGame.Stages
             return _y;
         }
 
-        // Stage 생성자
-        public JumpStage(AdventureOfKnight test)
-        {
-            test.StartTime = DateTime.Now;
-        }
-
         public JumpStage(List<Platform> platforms, Image bg, int startX, int startY)
         {
             // 발판 리스트
@@ -73,6 +67,10 @@ namespace JumpGame.Stages
             _backgroundImage = bg;
             _x = startX;
             _y = startY;
+        }
+        // 생성자 함수
+        public JumpStage()
+        {
         }
 
         // 스테이지 생성 함수

@@ -47,10 +47,10 @@ namespace JumpGame.View
             int JumpY = _parentJumpGameForm.Jumpstage.GetY();
 
             // 게임 상태 초기화
-            _parentJumpGameForm.Camera.CameraReset();
-            _parentJumpGameForm.Character.CharacterReset(JumpX, JumpY);
+            _parentJumpGameForm.CameraDisplay.CameraReset();
+            _parentJumpGameForm.CharacterStatus.CharacterReset(JumpX, JumpY);
             _parentJumpGameForm.GameStats.StatsReset();
-            _parentJumpGameForm.StartTime = DateTime.Now; // 경과 시간 리셋
+            _parentJumpGameForm.GameStats.ElapsedTime = 0; // 경과 시간 리셋
 
             // 게임 플레이 관련 변수 초기화
             _parentJumpGameForm.LeftPressed = false;

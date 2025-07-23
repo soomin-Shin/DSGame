@@ -21,29 +21,29 @@ namespace JumpGame
     public partial class AdventureOfKnight : Form       
     {   
         // 카메라
-        private CameraDisplay _camera;
-        public CameraDisplay Camera
+        private CameraDisplay _cameraDisplay;
+        public CameraDisplay CameraDisplay
         {
             get
             {
-                return _camera;
+                return _cameraDisplay;
             }
             set
             {
-                _camera = value;
+                _cameraDisplay = value;
             }
         }
         // 캐릭터
-        private CharacterStatus _character;
-        public CharacterStatus Character
+        private CharacterStatus _characterStatus;
+        public CharacterStatus CharacterStatus
         {
             get
             {
-                return _character;
+                return _characterStatus;
             }
             set
             {
-                _character = value;
+                _characterStatus = value;
             }
         }
         // 발판 리스트
@@ -75,20 +75,7 @@ namespace JumpGame
             {
                 _gameTimer = value;
             }
-        } // Controller
-        // 게임 시작 시간
-        private DateTime _startTime;
-        public DateTime StartTime
-        {
-            get
-            {
-                return _startTime;
-            }
-            set
-            {
-                _startTime = value;
-            }
-        } // 0초부터 시작하는거 찾기.
+        }
         // 왼쪽 버튼 눌렀는지
         private bool _leftPressed = false;
         public bool LeftPressed
@@ -175,7 +162,7 @@ namespace JumpGame
             // 화면 깜빡임 방지
             this.DoubleBuffered = true;
             // Jumpstage
-            Jumpstage = new JumpStage(this);
+            Jumpstage = new JumpStage();
             // 효과음 추가
             _soundEffect = new SoundEffect();
             // esc 추가
@@ -198,7 +185,7 @@ namespace JumpGame
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
 
-            this.MouseDown += new MouseEventHandler(CoordinateCheckClick); // MouseMove 이벤트 핸들러 추가
+            this.MouseDown += new MouseEventHandler(CoordinateCheckClick); // MouseClick 이벤트 핸들러 추가
         }
 
         // 게임 상태 업데이트
@@ -206,6 +193,7 @@ namespace JumpGame
         {
             // 시간 업데이트
             GameStats.StatsUpdateTimer();
+
             // 점프 입력 버퍼 관리
             // https://m.blog.naver.com/sorang226/223083889817
             if (_jumpBuffer > 0)
@@ -213,9 +201,9 @@ namespace JumpGame
                 _jumpBuffer--;
             }
             // 캐릭터가 현재 땅 위에 있고, 점프 버퍼가 유효하면 점프 실행
-            if (_character.IsOnGround() == true && _jumpBuffer > 0)
+            if (_characterStatus.IsOnGround() == true && _jumpBuffer > 0)
             {
-                _character.Jump();
+                _characterStatus.Jump();
                 _soundEffect.PlayJumpSound();
                 _jumpBuffer = 0;
             }
@@ -224,12 +212,12 @@ namespace JumpGame
             // 왼쪽으로 이동
             if (_leftPressed == true)
             {
-                _character.MoveLeft();
+                _characterStatus.MoveLeft();
             }
             // 오른쪽으로 이동
             if (_rightPressed == true)
             {
-                _character.MoveRight();
+                _characterStatus.MoveRight();
             }
 
 
@@ -296,7 +284,7 @@ namespace JumpGame
             // 배경 화면을 카메라 에 맞춰 그리기
             if (_backgroundImage != null)
             {
-                Rectangle srcRect = new Rectangle(0, _camera.Y, this.ClientSize.Width, this.ClientSize.Height);
+                Rectangle srcRect = new Rectangle(0, _cameraDisplay.Y, this.ClientSize.Width, this.ClientSize.Height);
                 Rectangle destRect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
 
                 if (srcRect.Bottom > _backgroundImage.Height)
@@ -318,11 +306,11 @@ namespace JumpGame
             // 모든 발판 그리기
             for (int i = 0; i < _platforms.Count; i++) 
             {
-                _platforms[i].PlatformDraw(g, _camera.X, _camera.Y);
+                _platforms[i].PlatformDraw(g, _cameraDisplay.X, _cameraDisplay.Y);
             }
 
             // 캐릭터 그리기
-            _character.Draw(g, _camera.X, _camera.Y);
+            _characterStatus.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
