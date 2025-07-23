@@ -58,7 +58,7 @@ namespace JumpGame
                 _position.X -= _speed; // 왼쪽으로 이동
 
                 // 불꽃이 화면 왼쪽 끝(X=0)을 벗어나면 비활성화
-                if (_projectileImage.X + _projectileImage.Width < 0)
+                if (_position.X + _projectileImage.Width < 0)
                 {
                     _isActive = false;
                 }
