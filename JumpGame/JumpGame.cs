@@ -49,7 +49,7 @@ namespace JumpGame
         private List<Platform> _platforms;
         // 배경 화면
         private Image _backgroundImage;
-        // 게임 스테이지
+        // 점프 스테이지
         private JumpStage _jumpstage;
         public JumpStage Jumpstage
         {
@@ -129,9 +129,9 @@ namespace JumpGame
                 _isGamePaused = value;
             }
         }
-        // 점프 입력 버퍼 프레임 수
+        // 점프 입력 버퍼 프레임
         private int _jumpBufferFrames = 5;
-        // 점프 입력 버퍼 카운터
+        // 점프 입력 버퍼
         private int _jumpBuffer = 0;
         public int JumpBuffer
         {
@@ -183,8 +183,7 @@ namespace JumpGame
             // 발판 리스트 
             _platforms = Jumpstage.Platforms;
             _backgroundImage = Jumpstage.BackgroundImage;
-            Point startPos = Jumpstage.StartPosition;
-            _character = new Character(startPos.X, startPos.Y);
+            _character = new Character(_jumpstage.GetX(), _jumpstage.GetY());
             // 카메라 초기화
             _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);
             // 폰트 적용
@@ -220,6 +219,7 @@ namespace JumpGame
         private void GameTimer_Tick(object sender, EventArgs e)   
         {
             // 점프 입력 버퍼 관리
+            // https://m.blog.naver.com/sorang226/223083889817
             if (_jumpBuffer > 0)
             {
                 _jumpBuffer--;
@@ -230,6 +230,12 @@ namespace JumpGame
                 _character.Jump();
                 _gameEffects.PlayJumpSound();
                 _jumpBuffer = 0;
+            }
+
+            // 점프 스테이지에서 낙사 시 리셋
+            if (_character.GetY() > _jumpstage.GetY() + 100)
+            {
+                _jumpstage.JumpStageReset(_character);
             }
 
             // 왼쪽으로 이동
@@ -297,10 +303,10 @@ namespace JumpGame
             {
                 _rightPressed = true;
             }
-            // 점프키는 착지 상태일 때만 한 번 눌림으로 인식
             if (e.KeyCode == Keys.Space)
             {
                 _jumpBuffer = _jumpBufferFrames;
+
             }
             if (e.KeyCode == Keys.Escape)
             {

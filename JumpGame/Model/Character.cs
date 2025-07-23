@@ -8,6 +8,14 @@ using JumpGame.Model;
 
 namespace JumpGame
 {
+    // 캐릭터 상태
+    public enum CharacterState
+    {
+        MoveLeft,
+        MoveRight,
+        Jump
+    }
+
     public class Character
     {
         // 캐릭터 X 좌표
@@ -16,14 +24,23 @@ namespace JumpGame
         // 캐릭터 Y 좌표
         private int _y;
 
-        // 캐릭터 초기 Y 좌표
-        private int _initialY;
-
         // 캐릭터의 너비
-        private int _width = 30;
+        private int _width = 53;
 
         // 캐릭터의 높이
-        private int _height = 50;
+        private int _height = 53;
+
+        // 캐릭터 기본 상태
+        private CharacterState _currentState = CharacterState.MoveRight;
+
+        // 캐릭터 왼쪽 이미지
+        private Image _characterLeftImage;
+        
+        // 캐릭터 오른쪽 이미지
+        private Image _characterRightImage;
+
+        // 캐릭터 점프 이미지
+        private Image _characterJumpImage;
 
         // 수직 속도
         private float _velocityY = 0;
@@ -37,14 +54,6 @@ namespace JumpGame
         // 좌우 이동 속도
         private int _moveSpeed = 5;
 
-        public Character(int startX, int startY)
-        {
-            _x = startX;
-            _y = startY;
-            // 초기 Y 좌표 저장
-            _initialY = startY;      
-        }
-
         // 캐릭터 X 좌표
         public int GetX()
         {
@@ -57,6 +66,15 @@ namespace JumpGame
             return _y;
         }
 
+        public Character(int startX, int startY)
+        {
+            _x = startX;
+            _y = startY;
+            _characterLeftImage = Image.FromFile("Assets/Image/PlayerLeftSword.png");
+            _characterRightImage = Image.FromFile("Assets/Image/PlayerRightSword.png");
+            _characterJumpImage = Image.FromFile("Assets/Image/PlayerJumpRightSword.png");
+
+        }
 
         // 캐릭터 히트 박스
         public Rectangle GetHitBox()
@@ -74,6 +92,9 @@ namespace JumpGame
             {
                 _x = 55;
             }
+
+            // 상태 변경
+            _currentState = CharacterState.MoveLeft;
         }
 
         // 오른쪽으로 이동
@@ -86,6 +107,9 @@ namespace JumpGame
             {
                 _x = 780 - _width;
             }
+
+            // 상태 변경
+            _currentState = CharacterState.MoveRight;
         }
 
         // 점프
@@ -97,6 +121,9 @@ namespace JumpGame
                 _velocityY = -12;
                 _onGround = false;
             }
+
+            // 상태 변경
+            _currentState = CharacterState.Jump;
         }
 
         // 현재 착지 여부 반환
@@ -154,26 +181,41 @@ namespace JumpGame
                     }
                 }
             }
-
-            // 캐릭터 Y좌표가 초기 위치 보다 낮아진 경우
-            if (_y > _initialY + 100)
-            {
-                // 상태 초기화
-                CharacterReset();
-            }
         }
 
         // 캐릭터 그림
         public void Draw(Graphics g, int offsetX, int offsetY)
         {
-            g.FillRectangle(Brushes.Green, _x - offsetX, _y - offsetY, _width, _height);
+            // 기본은 오른쪽 이동 이미지
+            Image characterImage = _characterRightImage;
+
+            // 캐릭터가 왼쪽으로 이동하는 경우
+            if (_currentState == CharacterState.MoveLeft)
+            {
+                characterImage = _characterLeftImage;
+            }
+            // 캐릭터가 오른쪽으로 이동하는 경우
+            else if (_currentState == CharacterState.MoveRight)
+            {
+                characterImage = _characterRightImage;
+            }
+            // 캐릭터 초기 이미지
+            if (characterImage != null)
+            {
+                g.DrawImage(characterImage, _x - offsetX, _y - offsetY, _width, _height);
+            }
+            // 캐릭터 이미지를 불러오지 못한 경우 사각형으로 대체
+            else
+            {
+                g.FillRectangle(Brushes.Green, _x - offsetX, _y - offsetY, _width, _height);
+            }
         }
 
         // 캐릭터 상태를 초기화
-        public void CharacterReset()
+        public void CharacterReset(int x, int y)
         {
-            _x = 300;
-            _y = _initialY;
+            _x = x;
+            _y = y;
             _velocityY = 0;
             _onGround = true;
         }
