@@ -1,6 +1,6 @@
 ﻿namespace JumpGame
 {
-    partial class JumpGame
+    partial class AdventureOfKnight
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.

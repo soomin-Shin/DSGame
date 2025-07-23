@@ -16,7 +16,7 @@ namespace JumpGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new JumpGame());
+            Application.Run(new AdventureOfKnight());
         }
     }
 }

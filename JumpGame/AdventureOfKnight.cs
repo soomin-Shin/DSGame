@@ -17,7 +17,7 @@ using System.Diagnostics;
 namespace JumpGame
 {
 
-    public partial class JumpGame : Form       
+    public partial class AdventureOfKnight : Form       
     {   
         // 카메라
         private Camera _camera;
@@ -74,7 +74,7 @@ namespace JumpGame
             {
                 _gameTimer = value;
             }
-        }
+        } // Controller
         // 게임 시작 시간
         private DateTime _startTime;
         public DateTime StartTime
@@ -87,7 +87,7 @@ namespace JumpGame
             {
                 _startTime = value;
             }
-        }
+        } // 0초부터 시작하는거 찾기.
         // 왼쪽 버튼 눌렀는지
         private bool _leftPressed = false;
         public bool LeftPressed
@@ -167,25 +167,27 @@ namespace JumpGame
         private Ui _gameUI;
         private Obstruction _obstruction;
         // 점프 스테이지 클리어
-        private bool _jumpStageClear = false;
-        public JumpGame()                      
+        private bool _jumpStageClear = false; // jumpstage로 이동
+        public AdventureOfKnight()                      
         {
             // 폼 사이즈 변경 불가
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             // 게임 화면 너비
-            this.Width = 833;
+            this.Width = 833; // 각 스테이지
             // 게임 화면 높이
-            this.Height = 600;
+            this.Height = 600; // 각 스테이지
             // 화면 깜빡임 방지
             this.DoubleBuffered = true;
+            // Jumpstage
+            Jumpstage = new JumpStage(this);
             // 스테이지 초기화
-            Jumpstage = JumpStage.CreateStage();
+            Jumpstage = JumpStage.CreateStage();  // 각 스테이지
             // 발판 리스트 
-            _platforms = Jumpstage.Platforms;
-            _backgroundImage = Jumpstage.BackgroundImage;
-            _character = new Character(_jumpstage.GetX(), _jumpstage.GetY());
+            _platforms = Jumpstage.Platforms;  // 각 스테이지
+            _backgroundImage = Jumpstage.BackgroundImage;  // 각 스테이지
+            _character = new Character(_jumpstage.GetX(), _jumpstage.GetY());  // 각 스테이지
             // 카메라 초기화
-            _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);
+            _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);  // 각 스테이지
             // 폰트 적용
             LoadCustomFont();
             this.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);
@@ -196,7 +198,7 @@ namespace JumpGame
             // 게임 통계 초기화
             _gameStats = new GameStats();
             // UI 객체 초기화 
-            _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성         
+            _gameUI = new Ui(_gameStats, _fonts.Families[0]); 
             // 타이머 생성
             _gameTimer = new Timer();                      
             _gameTimer.Interval = 16;
@@ -204,8 +206,8 @@ namespace JumpGame
             _gameTimer.Tick += GameTimer_Tick;
             // 게임 시작
             _gameTimer.Start();
-            _obstruction = new Obstruction();
-            this.KeyDown += GameForm_KeyDown;              
+            _obstruction = new Obstruction();  // 각 스테이지
+            this.KeyDown += GameForm_KeyDown; 
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
 
@@ -216,7 +218,7 @@ namespace JumpGame
         }
 
         // 게임 상태 업데이트
-        private void GameTimer_Tick(object sender, EventArgs e)   
+        private void GameTimer_Tick(object sender, EventArgs e)
         {
             // 점프 입력 버퍼 관리
             // https://m.blog.naver.com/sorang226/223083889817
@@ -233,9 +235,9 @@ namespace JumpGame
             }
 
             // 점프 스테이지에서 낙사 시 리셋
-            if (_character.GetY() > _jumpstage.GetY() + 100)
+            if (_character.GetY() > _jumpstage.GetY() + 100)  // 각 스테이지
             {
-                _jumpstage.JumpStageReset(_character);
+                _jumpstage.JumpStageReset(_character);  // 각 스테이지
             }
 
             // 왼쪽으로 이동
@@ -251,34 +253,34 @@ namespace JumpGame
 
 
             // 모든 발판 리스트 순서대로 업데이트
-            for (int i = 0; i < _platforms.Count; i++)      
+            for (int i = 0; i < _platforms.Count; i++)
             {
                 // i번째 발판 위치, 상태 업데이트
                 _platforms[i].PlatformUpdate();
             }
 
             // 캐릭터 상태 업데이트
-            _character.CharacterUpdate(_platforms, _camera.Y);
+            _character.CharacterUpdate(_platforms, _camera.Y);  // 각 스테이지
             // 카메라 상태 업데이트
-            _camera.CameraUpdate(_character.GetX(), _character.GetY());
+            _camera.CameraUpdate(_character.GetX(), _character.GetY());  // 각 스테이지
             // 모든 장애물(불꽃 포함) 업데이트 호출
-            _obstruction.UpdateAllObstacles();
+            _obstruction.UpdateAllObstacles();  // 각 스테이지
             // 골인 발판 판정
-            for (int i = 0; i < _platforms.Count; i = i + 1)
+            for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
             {
                 // i번째 발판이 Goal 타입이고 활성 되어 있는 경우
-                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true)
+                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true)  // 각 스테이지
                 {
                     // 골인 발판의 영역을 goalRect에 저장
-                    Rectangle goalRect = _platforms[i].Area;
+                    Rectangle goalRect = _platforms[i].Area;  // 각 스테이지
                     // 캐릭터 히트박스를 charRect에 저장
-                    Rectangle charRect = _character.GetHitBox();
+                    Rectangle charRect = _character.GetHitBox();  // 각 스테이지
 
                     // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
-                    bool isOnGoal = charRect.Bottom == goalRect.Top;
+                    bool isOnGoal = charRect.Bottom == goalRect.Top; // 각 스테이지
 
 
-                    if (isOnGoal == true)
+                    if (isOnGoal == true) // 각 스테이지
                     {
                         _jumpStageClear = true;
                         break;
@@ -293,7 +295,7 @@ namespace JumpGame
         }
 
         // 키를 누를 때
-        private void GameForm_KeyDown(object sender, KeyEventArgs e)    
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
             {
@@ -306,8 +308,8 @@ namespace JumpGame
             if (e.KeyCode == Keys.Space)
             {
                 _jumpBuffer = _jumpBufferFrames;
-
             }
+
             if (e.KeyCode == Keys.Escape)
             {
                  if (_isGamePaused == true)
@@ -320,7 +322,7 @@ namespace JumpGame
                 }
             }
             // 방향키 위키를 눌렀을 때 조건을 만족하면 클리어
-            if (e.KeyCode == Keys.Up)
+            if (e.KeyCode == Keys.Up)  // 각 스테이지
             {
                 if (_jumpStageClear == true)
                 {
@@ -346,7 +348,7 @@ namespace JumpGame
         }
 
         // 화면 그리기
-        private void GameForm_Paint(object sender, PaintEventArgs e)    
+        private void GameForm_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             
@@ -373,7 +375,7 @@ namespace JumpGame
             }
 
             // 모든 발판 그리기
-            for (int i = 0; i < _platforms.Count; i++)  
+            for (int i = 0; i < _platforms.Count; i++) 
             {
                 _platforms[i].PlatformDraw(g, _camera.X, _camera.Y);
             }
@@ -383,7 +385,7 @@ namespace JumpGame
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
-            _obstruction.draw(g);
+            _obstruction.draw(g);  // 각 스테이지
         }
 
         // 폰트 추가
@@ -417,7 +419,7 @@ namespace JumpGame
         /// <summary>
         /// esc 메뉴 세팅 메서드
         /// </summary>
-        private void PauseMenuSetting(JumpGame jumpGame)
+        private void PauseMenuSetting(AdventureOfKnight jumpGame)
         {
             _pauseMenu = new PauseMenuControl(jumpGame);
 

@@ -12,8 +12,8 @@ namespace JumpGame.View
 {
     public partial class PauseMenuControl : UserControl
     {
-        private JumpGame _parentJumpGameForm;
-        public PauseMenuControl(JumpGame parentForm)
+        private AdventureOfKnight _parentJumpGameForm;
+        public PauseMenuControl(AdventureOfKnight parentForm)
         {
             InitializeComponent();
             _parentJumpGameForm = parentForm;
