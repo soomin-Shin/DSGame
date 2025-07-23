@@ -6,7 +6,7 @@ namespace JumpGame
     /// <summary>
     /// 개별 불꽃 이미지를 관리하는 클래스
     /// </summary>
-    public class FireBall
+    public class Projectile
     {
         private Image fireImage;
         private Point position;
@@ -38,7 +38,7 @@ namespace JumpGame
         /// <param name="startY">불꽃의 시작 Y 좌표입니다.</param>
         /// <param name="fireSpeed">불꽃의 이동 속도입니다.</param>
         /// <param name="image">사용할 불꽃 이미지입니다.</param>
-        public FireBall(int startX, int startY, int fireSpeed, Image image)
+        public Projectile(int startX, int startY, int fireSpeed, Image image)
         {
             this.position = new Point(startX, startY);
             this.initialX = startX; // 초기 X 저장

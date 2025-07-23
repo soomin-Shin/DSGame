@@ -16,7 +16,7 @@ namespace JumpGame
         Jump
     }
 
-    public class Character
+    public class CharacterStatus
     {
         // 캐릭터 X 좌표
         private int _x;
@@ -66,7 +66,7 @@ namespace JumpGame
             return _y;
         }
 
-        public Character(int startX, int startY)
+        public CharacterStatus(int startX, int startY)
         {
             _x = startX;
             _y = startY;

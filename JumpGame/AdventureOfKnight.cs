@@ -20,8 +20,8 @@ namespace JumpGame
     public partial class AdventureOfKnight : Form       
     {   
         // 카메라
-        private Camera _camera;
-        public Camera Camera
+        private CameraDisplay _camera;
+        public CameraDisplay Camera
         {
             get
             {
@@ -33,8 +33,8 @@ namespace JumpGame
             }
         }
         // 캐릭터
-        private Character _character;
-        public Character Character
+        private CharacterStatus _character;
+        public CharacterStatus Character
         {
             get
             {
@@ -147,7 +147,7 @@ namespace JumpGame
         // 폰트
         PrivateFontCollection _fonts = new PrivateFontCollection();
         // 게임 효과음 관리 객체
-        private Effect _gameEffects;
+        private SoundEffect _gameEffects;
         // ESC PauseMenu
         private PauseMenuControl _pauseMenu;
         // Game 점수, 목숨, 시간
@@ -185,14 +185,14 @@ namespace JumpGame
             // 발판 리스트 
             _platforms = Jumpstage.Platforms;  // 각 스테이지
             _backgroundImage = Jumpstage.BackgroundImage;  // 각 스테이지
-            _character = new Character(_jumpstage.GetX(), _jumpstage.GetY());  // 각 스테이지
+            _character = new CharacterStatus(_jumpstage.GetX(), _jumpstage.GetY());  // 각 스테이지
             // 카메라 초기화
-            _camera = new Camera(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);  // 각 스테이지
+            _camera = new CameraDisplay(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);  // 각 스테이지
             // 폰트 적용
             LoadCustomFont();
             this.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);
             // 효과음 추가
-            _gameEffects = new Effect();
+            _gameEffects = new SoundEffect();
             // esc 추가
             PauseMenuSetting(this);
             // 게임 통계 초기화

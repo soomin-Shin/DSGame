@@ -108,7 +108,7 @@ namespace JumpGame.Stages
         }
 
         // 점프 스테이지 캐릭터 초기화
-        public void JumpStageReset(Character character)
+        public void JumpStageReset(CharacterStatus character)
         {
             character.CharacterReset(_x, _y);
         }

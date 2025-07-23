@@ -9,12 +9,12 @@ using System.Media; // SoundPlayer를 위해 추가
 
 namespace JumpGame.Model
 {
-    public class Effect
+    public class SoundEffect
     {
         private WMPLib.WindowsMediaPlayer _bgmPlayer = new WMPLib.WindowsMediaPlayer(); // 배경음악 전용 플레이어
         private WMPLib.WindowsMediaPlayer _jumpSoundPlayer= new WMPLib.WindowsMediaPlayer(); // 점프 효과음 전용 플레이어
     
-        public Effect() // Effect 클래스 생성자 추가 (여기서 초기화)
+        public SoundEffect() // Effect 클래스 생성자 추가 (여기서 초기화)
         {
             BGMSetting(); // 배경음악 초기화 및 재생
             JumpSoundSetting(); // 점프 효과음 초기화

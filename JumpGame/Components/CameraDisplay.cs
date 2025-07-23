@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JumpGame
 {
 
-    public class Camera
+    public class CameraDisplay
     {
         // 카메라의 X 좌표
         private int _x;
@@ -49,7 +49,7 @@ namespace JumpGame
         }
 
         // 화면 크기 초기화
-        public Camera(int screenWidth, int screenHeight, int worldHeight)
+        public CameraDisplay(int screenWidth, int screenHeight, int worldHeight)
         {
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
