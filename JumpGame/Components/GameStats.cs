@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 
 namespace JumpGame.Model
 {
@@ -34,8 +34,8 @@ namespace JumpGame.Model
             }
         }
 
-        private TimeSpan _elapsedTime; // Elapsed game time
-        public TimeSpan ElapsedTime
+        private int _elapsedTime; // Elapsed game time
+        public int ElapsedTime
         {
             get
             {
@@ -46,6 +46,30 @@ namespace JumpGame.Model
                 _elapsedTime = value;
             }
         }
+
+        private Timer _gameTimer;         // 초 단위 타이머
+        public Timer GameTimer
+        {
+            get
+            {
+                return _gameTimer;
+            }
+            set
+            {
+                _gameTimer = value;
+            }
+        }
+        public GameStats()
+        {
+            GameTimer = new Timer();
+            GameTimer.Interval = 1000; // 1000ms = 1초
+            GameTimer.Start(); // 타이머 시작
+        }
+
+        public void StatsUpdateTimer()
+        {
+            ElapsedTime++;
+        }
         /// <summary>
         /// 정보 리셋
         /// </summary>
@@ -53,7 +77,7 @@ namespace JumpGame.Model
         {
             this._score = 0;
             this._lives = 3;
-            this._elapsedTime = TimeSpan.Zero;
+            this._elapsedTime = 0;
         }
     }
 }

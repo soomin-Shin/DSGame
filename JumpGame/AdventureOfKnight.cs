@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using JumpGame.Controller;
 
 namespace JumpGame
 {
@@ -144,10 +145,8 @@ namespace JumpGame
                 _jumpBuffer = value;
             }
         }
-        // 폰트
-        PrivateFontCollection _fonts = new PrivateFontCollection();
         // 게임 효과음 관리 객체
-        private SoundEffect _gameEffects;
+        private SoundEffect _soundEffect;
         // ESC PauseMenu
         private PauseMenuControl _pauseMenu;
         // Game 점수, 목숨, 시간
@@ -163,63 +162,50 @@ namespace JumpGame
                 _gameStats = value;
             }
         }
+        private FontController _fontController;
+
         // UI 관리 객체 추가
         private Ui _gameUI;
         private Obstruction _obstruction;
-        // 점프 스테이지 클리어
-        private bool _jumpStageClear = false; // jumpstage로 이동
+
         public AdventureOfKnight()                      
         {
             // 폼 사이즈 변경 불가
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            // 게임 화면 너비
-            this.Width = 833; // 각 스테이지
-            // 게임 화면 높이
-            this.Height = 600; // 각 스테이지
             // 화면 깜빡임 방지
             this.DoubleBuffered = true;
             // Jumpstage
             Jumpstage = new JumpStage(this);
-            // 스테이지 초기화
-            Jumpstage = JumpStage.CreateStage();  // 각 스테이지
-            // 발판 리스트 
-            _platforms = Jumpstage.Platforms;  // 각 스테이지
-            _backgroundImage = Jumpstage.BackgroundImage;  // 각 스테이지
-            _character = new CharacterStatus(_jumpstage.GetX(), _jumpstage.GetY());  // 각 스테이지
-            // 카메라 초기화
-            _camera = new CameraDisplay(this.ClientSize.Width, this.ClientSize.Height, _backgroundImage.Height);  // 각 스테이지
-            // 폰트 적용
-            LoadCustomFont();
-            this.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);
             // 효과음 추가
-            _gameEffects = new SoundEffect();
+            _soundEffect = new SoundEffect();
             // esc 추가
             PauseMenuSetting(this);
-            // 게임 통계 초기화
-            _gameStats = new GameStats();
+            // 게임 통계 초기화 및 타이머 시작
+            GameStats = new GameStats();
+            // 폰트 초기화
+            _fontController = new FontController(this);
             // UI 객체 초기화 
-            _gameUI = new Ui(_gameStats, _fonts.Families[0]); 
+            _gameUI = new Ui(GameStats, _fontController.Fonts.Families[0]);
             // 타이머 생성
-            _gameTimer = new Timer();                      
-            _gameTimer.Interval = 16;
+            GameTimer = new Timer();
+            GameTimer.Interval = 16;
             // 타이머 Tick 이벤트 핸들러 등록
-            _gameTimer.Tick += GameTimer_Tick;
+            GameTimer.Tick += GameTimer_Tick;
             // 게임 시작
-            _gameTimer.Start();
-            _obstruction = new Obstruction();  // 각 스테이지
+            GameTimer.Start();
+
             this.KeyDown += GameForm_KeyDown; 
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
 
             this.MouseDown += new MouseEventHandler(CoordinateCheckClick); // MouseMove 이벤트 핸들러 추가
-
-            // 시작 시간 저장
-            _startTime = DateTime.Now;
         }
 
         // 게임 상태 업데이트
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            // 시간 업데이트
+            GameStats.StatsUpdateTimer();
             // 점프 입력 버퍼 관리
             // https://m.blog.naver.com/sorang226/223083889817
             if (_jumpBuffer > 0)
@@ -230,15 +216,10 @@ namespace JumpGame
             if (_character.IsOnGround() == true && _jumpBuffer > 0)
             {
                 _character.Jump();
-                _gameEffects.PlayJumpSound();
+                _soundEffect.PlayJumpSound();
                 _jumpBuffer = 0;
             }
 
-            // 점프 스테이지에서 낙사 시 리셋
-            if (_character.GetY() > _jumpstage.GetY() + 100)  // 각 스테이지
-            {
-                _jumpstage.JumpStageReset(_character);  // 각 스테이지
-            }
 
             // 왼쪽으로 이동
             if (_leftPressed == true)
@@ -259,37 +240,8 @@ namespace JumpGame
                 _platforms[i].PlatformUpdate();
             }
 
-            // 캐릭터 상태 업데이트
-            _character.CharacterUpdate(_platforms, _camera.Y);  // 각 스테이지
-            // 카메라 상태 업데이트
-            _camera.CameraUpdate(_character.GetX(), _character.GetY());  // 각 스테이지
-            // 모든 장애물(불꽃 포함) 업데이트 호출
-            _obstruction.UpdateAllObstacles();  // 각 스테이지
-            // 골인 발판 판정
-            for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
-            {
-                // i번째 발판이 Goal 타입이고 활성 되어 있는 경우
-                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true)  // 각 스테이지
-                {
-                    // 골인 발판의 영역을 goalRect에 저장
-                    Rectangle goalRect = _platforms[i].Area;  // 각 스테이지
-                    // 캐릭터 히트박스를 charRect에 저장
-                    Rectangle charRect = _character.GetHitBox();  // 각 스테이지
-
-                    // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
-                    bool isOnGoal = charRect.Bottom == goalRect.Top; // 각 스테이지
-
-
-                    if (isOnGoal == true) // 각 스테이지
-                    {
-                        _jumpStageClear = true;
-                        break;
-                    }
-
-                }
-            }
             // 게임 시간 업데이트
-            _gameStats.ElapsedTime = DateTime.Now - _startTime;
+            _gameStats.ElapsedTime = GameStats.ElapsedTime;
             // 화면 다시 그리기
             this.Invalidate();   
         }
@@ -319,17 +271,6 @@ namespace JumpGame
                 else
                 {
                     PauseGame();
-                }
-            }
-            // 방향키 위키를 눌렀을 때 조건을 만족하면 클리어
-            if (e.KeyCode == Keys.Up)  // 각 스테이지
-            {
-                if (_jumpStageClear == true)
-                {
-                    _gameTimer.Stop();
-                    string message = "골인 지점에 도달했습니다!\n걸린 시간: " + _gameStats.ElapsedTime.TotalSeconds.ToString("F2") + "초";
-                    MessageBox.Show(message, "게임 종료");
-                    this.Close();
                 }
             }
         }
@@ -385,14 +326,9 @@ namespace JumpGame
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
-            _obstruction.draw(g);  // 각 스테이지
-        }
 
-        // 폰트 추가
-        private void LoadCustomFont()
-        {
-            string fontPath = $"{Application.StartupPath}//Assets//Font//Cinzel-VariableFont_wght.ttf";
-            _fonts.AddFontFile(fontPath);
+            // 장애물 그리기
+            _obstruction.draw(g);
         }
 
         /// <summary>
@@ -433,8 +369,9 @@ namespace JumpGame
             this.Controls.Add(_pauseMenu); // 폼의 컨트롤 컬렉션에 추가
             _pauseMenu.BringToFront(); // 다른 컨트롤 위에 표시되도록 가장 앞으로 가져옴
         }
+
         /// <summary>
-        /// x,y 좌표 찾기
+        /// x,y 좌표 찾기 나중에 지울거임.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -49,7 +49,7 @@ namespace JumpGame.View
             g.DrawString(livesText, uiFont, fontBrush, clientWidth / 2 - livesTextSize.Width / 2, clientHeight - 50);
 
             // 시간 표시
-            string timeText = $"Time: {_gameStats.ElapsedTime.TotalSeconds:F2}초";
+            string timeText = $"Time: {_gameStats.ElapsedTime}초";
             SizeF timeTextSize = g.MeasureString(timeText, uiFont);
             g.DrawString(timeText, uiFont, fontBrush, clientWidth - timeTextSize.Width - 10, clientHeight - 50);
             
