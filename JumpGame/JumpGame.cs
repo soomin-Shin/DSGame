@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace JumpGame
 {
@@ -164,10 +165,9 @@ namespace JumpGame
         }
         // UI 관리 객체 추가
         private Ui _gameUI;
-
+        private Obstruction _obstruction;
         // 점프 스테이지 클리어
         private bool _jumpStageClear = false;
-
         public JumpGame()                      
         {
             // 폼 사이즈 변경 불가
@@ -198,18 +198,19 @@ namespace JumpGame
             _gameStats = new GameStats();
             // UI 객체 초기화 
             _gameUI = new Ui(_gameStats, _fonts.Families[0]); // <-- UI 객체 생성         
-
             // 타이머 생성
             _gameTimer = new Timer();                      
             _gameTimer.Interval = 16;
             // 타이머 Tick 이벤트 핸들러 등록
             _gameTimer.Tick += GameTimer_Tick;
             // 게임 시작
-            _gameTimer.Start();                            
-
+            _gameTimer.Start();
+            _obstruction = new Obstruction();
             this.KeyDown += GameForm_KeyDown;              
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
+
+            this.MouseDown += new MouseEventHandler(CoordinateCheckClick); // MouseMove 이벤트 핸들러 추가
 
             // 시작 시간 저장
             _startTime = DateTime.Now;
@@ -223,7 +224,6 @@ namespace JumpGame
             {
                 _jumpBuffer--;
             }
-
             // 캐릭터가 현재 땅 위에 있고, 점프 버퍼가 유효하면 점프 실행
             if (_character.IsOnGround() == true && _jumpBuffer > 0)
             {
@@ -255,7 +255,8 @@ namespace JumpGame
             _character.CharacterUpdate(_platforms, _camera.Y);
             // 카메라 상태 업데이트
             _camera.CameraUpdate(_character.GetX(), _character.GetY());
-
+            // 모든 장애물(불꽃 포함) 업데이트 호출
+            _obstruction.UpdateAllObstacles();
             // 골인 발판 판정
             for (int i = 0; i < _platforms.Count; i = i + 1)
             {
@@ -376,6 +377,7 @@ namespace JumpGame
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
+            _obstruction.draw(g);
         }
 
         // 폰트 추가
@@ -423,7 +425,14 @@ namespace JumpGame
             this.Controls.Add(_pauseMenu); // 폼의 컨트롤 컬렉션에 추가
             _pauseMenu.BringToFront(); // 다른 컨트롤 위에 표시되도록 가장 앞으로 가져옴
         }
-
-
+        /// <summary>
+        /// x,y 좌표 찾기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CoordinateCheckClick(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine($"{e.X},{e.Y}");
+        }
     }
 }
