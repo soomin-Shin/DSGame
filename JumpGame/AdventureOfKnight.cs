@@ -154,8 +154,19 @@ namespace JumpGame
         // UI 관리 객체 추가
         private Ui _gameUI;
         private Obstruction _obstruction;
-
-        public AdventureOfKnight()                      
+        private string _currentStage;
+        public string CurrentStage
+        {
+            get
+            {
+                return _currentStage;
+            }
+            set
+            {
+                _currentStage = value;
+            }
+        }
+        public AdventureOfKnight()
         {
             // 폼 사이즈 변경 불가
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -186,6 +197,16 @@ namespace JumpGame
             this.Paint += GameForm_Paint;
 
             this.MouseDown += new MouseEventHandler(CoordinateCheckClick); // MouseClick 이벤트 핸들러 추가
+
+            // 만약 스테이지 처음 선언할때 바꿔주고 싶으면 여기에 넣으시오.
+            if (_currentStage == "JumpStage")
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         // 게임 상태 업데이트
@@ -228,8 +249,6 @@ namespace JumpGame
                 _platforms[i].PlatformUpdate();
             }
 
-            // 게임 시간 업데이트
-            _gameStats.ElapsedTime = GameStats.ElapsedTime;
             // 화면 다시 그리기
             this.Invalidate();   
         }
@@ -259,6 +278,15 @@ namespace JumpGame
                 else
                 {
                     PauseGame();
+                }
+            }
+
+            // 골인 지점으로 왔을 때 해당 좌표에서 위에 키를 누르면 보스 스테이지로 이동시켜주기.
+            if ( 1 < CharacterStatus.GetX() && CharacterStatus.GetX() < 3 && CharacterStatus.GetY() == 2) // x좌표는 200 ~ 240까지 y좌표는 고정
+            {
+                if (e.KeyCode == Keys.Up)
+                {
+                    // Boss 스테이지로 이동하는 메서드 실행.
                 }
             }
         }
