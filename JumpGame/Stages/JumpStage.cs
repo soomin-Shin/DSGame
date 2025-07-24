@@ -136,10 +136,14 @@ namespace JumpGame.Stages
             return new JumpStage(platforms, bg, startX, startY, formWidth, formHeight);
         }
 
-        // 점프 스테이지 캐릭터 초기화
-        public void JumpStageReset(CharacterStatus character)
+        // 점프 스테이지 캐릭터 초기화 
+        public void CheckResetCondition(CharacterStatus character)
         {
-            character.CharacterReset(_x, _y);
+            // 캐릭터가 초기 위치 보다 100만큼 아래로 떨어졌는지 확인
+            if (character.GetY() > _y + 100)
+            {
+                character.CharacterReset(_x, _y);
+            }
         }
     }
 }
