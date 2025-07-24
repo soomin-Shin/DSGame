@@ -28,9 +28,9 @@ namespace JumpGame.Model
 
             _projectileLines = new List<Projectile>();
 
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 417, _FIRE_SPEED, _defaultFireBallImage));
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 300, _FIRE_SPEED, _defaultFireBallImage));
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 200, _FIRE_SPEED, _defaultFireBallImage));
+            _projectileLines.Add(new Projectile(_FIRE_START_X, 417, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(_FIRE_START_X, 300, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(_FIRE_START_X, 200, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
         }
 
 

@@ -19,7 +19,9 @@ namespace JumpGame
         // 밟으면 사라지는 발판
         StepDisappear,
         // 골인 발판
-        Goal
+        Goal,
+        // 투명 발판
+        Transparent
     }
 
     public class Platform
@@ -171,6 +173,12 @@ namespace JumpGame
             // 발판 활성화 여부 체크
             if (IsActive == false)
             {
+                return;
+            }
+
+            if (Type == PlatformType.Transparent)
+            {
+                // 투명 발판은 아무것도 그리지 않음 (충돌 판정은 존재)
                 return;
             }
 
