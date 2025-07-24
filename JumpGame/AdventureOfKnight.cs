@@ -205,6 +205,7 @@ namespace JumpGame
         }
         private bool _bossStageInitialized = false;
         private bool _jumpStageClear = false; // jumpstage로 이동
+        private bool _gameClearDisplayed = false;
 
         public AdventureOfKnight()
         {
@@ -247,11 +248,25 @@ namespace JumpGame
             {
 
             }
+            if (_enemyController?.GameCleared == true && !_gameClearDisplayed)
+            {
+                _gameClearDisplayed = true;
+                _gameTimer.Stop();
+                Invalidate();
+                return;
+            }
         }
 
         // 게임 상태 업데이트
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            if (_enemyController?.GameCleared == true && !_gameClearDisplayed)
+            {
+                _gameClearDisplayed = true;
+                _gameTimer.Stop();
+                Invalidate();
+                return;
+            }
             // 시간 업데이트
             GameStats.StatsUpdateTimer();
 
@@ -299,7 +314,7 @@ namespace JumpGame
             _cameraDisplay.CameraUpdate(_characterStatus.GetX(), _characterStatus.GetY());
 
             // 적 상태 확인
-            _enemyController?.Update();
+            _enemyController?.Update(CharacterStatus.SwordProjectiles);
 
             int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
 
@@ -473,6 +488,13 @@ namespace JumpGame
             if (_currentStage == "BossStage")
             {
                 _enemyController?.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+                if (_gameClearDisplayed)
+                {
+                    Font clearFont = new Font("Arial", 40, FontStyle.Bold);
+                    Brush clearBrush = Brushes.Yellow;
+                    g.DrawString("용을 죽이고 보물을 얻었다!", clearFont, clearBrush, 500, 300);
+                    g.DrawString($"SCORE: {GameStats.Score}", clearFont, clearBrush, 500, 360);
+                }
             }
         }
 
