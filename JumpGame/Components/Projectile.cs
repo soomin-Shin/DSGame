@@ -112,7 +112,7 @@ namespace JumpGame
         /// <summary>
         /// 객체에 불꽃 이미지를 그림
         /// </summary>
-        /// <param name="g">.</param>
+        /// <param name="g"></param>
         public void FireBallDraw(Graphics g)
         {
             if (_isActive && _projectileImage != null)

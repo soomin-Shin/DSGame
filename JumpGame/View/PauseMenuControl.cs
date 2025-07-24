@@ -19,6 +19,7 @@ namespace JumpGame.View
             InitializeComponent();
             _parentJumpGameForm = parentForm;
         }
+
         /// <summary>
         /// 게임 종료
         /// </summary>
