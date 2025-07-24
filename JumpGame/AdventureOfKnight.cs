@@ -353,7 +353,7 @@ namespace JumpGame
         public void ResumeGame()
         {
             _isGamePaused = false;
-            _gameTimer.Start(); // 게임 재개
+            GameTimer.Start(); // 게임 재개
             _pauseMenu.Visible = false; // 메뉴 숨김
             this.Focus();
         }
@@ -363,7 +363,7 @@ namespace JumpGame
         public void PauseGame()
         {
             _isGamePaused = true;
-            _gameTimer.Stop(); // 게임 일시정지
+            GameTimer.Stop(); // 게임 일시정지
             _pauseMenu.Visible = true; // 메뉴 표시
             this.Focus();
         }
