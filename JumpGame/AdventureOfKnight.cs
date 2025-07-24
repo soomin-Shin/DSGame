@@ -221,6 +221,8 @@ namespace JumpGame
             _fontController = new FontController(this);
             // UI 객체 초기화 
             _gameUI = new Ui(GameStats, _fontController.Fonts.Families[0]);
+            // Obstruction 인스턴스 생성
+            _obstruction = new Obstruction();
             // 타이머 생성
             GameTimer = new Timer();
             GameTimer.Interval = 16;
@@ -228,7 +230,6 @@ namespace JumpGame
             GameTimer.Tick += GameTimer_Tick;
             // 게임 시작
             GameTimer.Start();
-
             this.KeyDown += GameForm_KeyDown; 
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
@@ -296,6 +297,10 @@ namespace JumpGame
 
             // 적 상태 확인
             _enemyController?.Update();
+
+            int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
+
+            _obstruction.UpdateAllObstacles(currentScreenWidth); // 수정된 메서드 호출
 
             // 골인 발판 판정
             for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
@@ -426,7 +431,7 @@ namespace JumpGame
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
 
             // 장애물 그리기
-            //_obstruction.draw(g);
+            _obstruction.draw(g);
 
             // 검기 발사
             _characterStatus.ShootProjectiles(g, _cameraDisplay.X, _cameraDisplay.Y);

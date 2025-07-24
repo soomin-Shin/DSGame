@@ -12,8 +12,8 @@ namespace JumpGame.Model
         private List<Projectile> _projectileLines;
         private Image _fireBallImage;
 
-        private const int FIRE_START_X_RIGHT = 753;
-        private const int FIRE_START_X_LEFT = 0;
+        private const int FIRE_START_X_RIGHT = 745;
+        private const int FIRE_START_X_LEFT = 93;
         private const int _FIRE_SPEED = 5;
 
         public Obstruction()
