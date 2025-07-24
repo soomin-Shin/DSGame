@@ -46,17 +46,17 @@ namespace JumpGame.Model
         /// 모든 객체들과 설치류 장애물 객체들을 그립니다.
         /// </summary>
         /// <param name="g">.</param>
-        public void DrawAllObstacles(Graphics g)
+        public void DrawAllObstacles(Graphics g, int cameraX, int cameraY)
         {
             foreach (Projectile line in _projectileLines)
             {
-                line.FireBallDraw(g); // 각 라인의 그리기 메서드 호출
+                line.FireBallDraw(g, cameraX, cameraY);
             }
         }
 
-        public void draw(Graphics g)
+        public void draw(Graphics g, int cameraX, int cameraY)
         {
-            DrawAllObstacles(g); // 모든 설치류 장애물 그리기 호출
+            DrawAllObstacles(g, cameraX, cameraY); // 모든 설치류 장애물 그리기 호출
         }
 
         public void ReSet()

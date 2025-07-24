@@ -34,7 +34,7 @@ namespace JumpGame
             foreach (var proj in _projectiles)
             {
                 // FireBall용 렌더링
-                proj.FireBallDraw(g);
+                proj.FireBallDraw(g, cameraX, cameraY);
             }
         }
 

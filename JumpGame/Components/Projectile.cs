@@ -144,11 +144,11 @@ namespace JumpGame
         /// 객체에 불꽃 이미지를 그림
         /// </summary>
         /// <param name="g"></param>
-        public void FireBallDraw(Graphics g)
+        public void FireBallDraw(Graphics g, int cameraX, int cameraY)
         {
-            if (_isActive && _projectileImage != null)
+            if (_isActive && _type == ProjectileType.FireBall && _projectileImage != null)
             {
-                g.DrawImage(_projectileImage, _position);
+                g.DrawImage(_projectileImage, _position.X - cameraX, _position.Y - cameraY, 82, 58);
             }
         }
 
