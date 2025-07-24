@@ -25,10 +25,10 @@ namespace JumpGame.Model
             // Projectile 생성자 호출 시 타입과 방향 인자 추가
             _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 417, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
             _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 287, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 304, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, -304, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
             _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 137, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 484, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 419, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, -484, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, -419, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
             _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 278, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
             //_projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 100, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
         }
@@ -56,11 +56,6 @@ namespace JumpGame.Model
             {
                 line.FireBallDraw(g, cameraX, cameraY);
             }
-        }
-
-        public void draw(Graphics g, int cameraX, int cameraY)
-        {
-            DrawAllObstacles(g, cameraX, cameraY); // 모든 설치류 장애물 그리기 호출
         }
 
         public void ReSet()

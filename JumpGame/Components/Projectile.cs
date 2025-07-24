@@ -148,7 +148,7 @@ namespace JumpGame
         {
             if (_isActive && _type == ProjectileType.FireBall && _projectileImage != null)
             {
-                g.DrawImage(_projectileImage, _position.X - cameraX, _position.Y - cameraY, 82, 58);
+                g.DrawImage(_projectileImage, _position.X - cameraX, _position.Y - cameraY);
             }
         }
 
