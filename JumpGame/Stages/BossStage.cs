@@ -21,6 +21,20 @@ namespace JumpGame.Stages
         // 배경 화면
         private Image _backgroundImage;
 
+        private EnemyController _enemyController;
+
+        // 적 클래스
+        private EnemyController Enemy
+        {
+            get
+            {
+                return _enemyController;
+            }
+            set
+            {
+                _enemyController = value;
+            }
+        }
 
         public List<Platform> Platforms
         {
@@ -57,10 +71,11 @@ namespace JumpGame.Stages
         {
             return _y;
         }
-        
+
         // 스테이지 생성 함수
-        public static void CreateStage(AdventureOfKnight now)
+        public static void CreateStage(AdventureOfKnight game)
         {
+
             // 발판 목록 정의(아래에 각 발판 좌표/종류를 배열에 추가)
             var _platforms = new List<Platform>()
             {
@@ -74,16 +89,28 @@ namespace JumpGame.Stages
                 new Platform(new Rectangle(590, 601, 64, 61), PlatformType.Transparent)
             };
 
-            now.Width = 1536; // 각 스테이지
+            game.Width = 1536; // 각 스테이지
             // 게임 화면 높이
-            now.Height = 833; // 각 스테이지
-            now.Platforms = _platforms;  // 각 스테이지
-            now.BackgroundImage = Image.FromFile("Assets/Image/BossStage.png");  // 각 스테이지
-            now.CharacterStatus = new CharacterStatus(300, 500);  // 각 스테이지
-            now.CameraDisplay = new CameraDisplay(now.ClientSize.Width, now.ClientSize.Height, now.BackgroundImage.Height);  // 각 스테이지
+            game.Height = 833; // 각 스테이지
+            game.Platforms = _platforms;  // 각 스테이지
+            game.BackgroundImage = Image.FromFile("Assets/Image/BossStage.png");  // 각 스테이지
+            game.CharacterStatus = new CharacterStatus(300, 500);  // 각 스테이지
+            game.CameraDisplay = new CameraDisplay(game.ClientSize.Width, game.ClientSize.Height, game.BackgroundImage.Height);  // 각 스테이지
+
+            // 보스 목록 정의
+            Image boss = Image.FromFile("Assets/Image/Boss.png");
+            Image bossAttack = Image.FromFile("Assets/Image/BossAttack.png");
+            Image bossDead = Image.FromFile("Assets/Image/BossDead.png");
+            Image fireball = Image.FromFile("Assets/Image/BossFireBall.png");
+
+            Point bossSpawn = new Point(864, 158); // 원하는 위치로 설정
+
+
+            game.EnemyController = new EnemyController(boss, bossAttack, fireball, bossDead, bossSpawn, game.CharacterStatus);
+
 
             //  배경 화면 로드
-           
+
         }
 
         // 보스 스테이지 캐릭터 초기화
