@@ -478,10 +478,7 @@ namespace JumpGame
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
-
-            // 장애물 그리기
-            _obstruction.DrawAllObstacles(g, _cameraDisplay.X, _cameraDisplay.Y);
-
+           
             // 검기 발사
             _characterStatus.ShootProjectiles(g, _cameraDisplay.X, _cameraDisplay.Y);
 
@@ -495,6 +492,11 @@ namespace JumpGame
                     g.DrawString("용을 죽이고 보물을 얻었다!", clearFont, clearBrush, 500, 300);
                     g.DrawString($"SCORE: {GameStats.Score}", clearFont, clearBrush, 500, 360);
                 }
+            }
+            else
+            {
+                // 장애물 그리기
+                _obstruction.DrawAllObstacles(g, _cameraDisplay.X, _cameraDisplay.Y);
             }
         }
 
