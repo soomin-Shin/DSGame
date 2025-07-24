@@ -10,7 +10,7 @@ namespace JumpGame
         private Image _fireBallImage;
         private List<Projectile> _projectiles = new List<Projectile>();
 
-        public EnemyController(Image bossIdle, Image bossAttack, Image fireballImage, Image bossDeadImage, Image swordImage, Point bossSpawn, CharacterStatus player)
+        public EnemyController(Image bossIdle, Image bossAttack, Image fireballImage, Image bossDeadImage, Point bossSpawn, CharacterStatus player)
         {
             _fireBallImage = fireballImage;
             _boss = new Boss(bossIdle, bossAttack, fireballImage, bossDeadImage, bossSpawn.X, bossSpawn.Y, player);

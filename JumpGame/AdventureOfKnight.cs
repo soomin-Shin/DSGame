@@ -191,7 +191,19 @@ namespace JumpGame
 
         // Enemy Controller (보스 + 검기)
         private EnemyController _enemyController;
+        public EnemyController EnemyController
+        {
+            get
+            {
+                return _enemyController;
+            }
+            set
+            {
+                _enemyController = value;
+            }
+        }
         private bool _bossStageInitialized = false;
+        private bool _jumpStageClear = false; // jumpstage로 이동
 
         public AdventureOfKnight()
         {
@@ -282,6 +294,33 @@ namespace JumpGame
             // 카메라 위치 업데이트 - 캐릭터 Y 기준으로 따라가도록
             _cameraDisplay.CameraUpdate(_characterStatus.GetX(), _characterStatus.GetY());
 
+            // 적 상태 확인
+            _enemyController?.Update();
+
+            // 골인 발판 판정
+            for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
+            {
+                // i번째 발판이 Goal 타입이고 활성 되어 있는 경우
+                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true)  // 각 스테이지
+                {
+                    // 골인 발판의 영역을 goalRect에 저장
+                    Rectangle goalRect = _platforms[i].Area;  // 각 스테이지
+                    // 캐릭터 히트박스를 charRect에 저장
+                    Rectangle charRect = CharacterStatus.GetHitBox();  // 각 스테이지
+
+                    // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
+                    bool isOnGoal = charRect.Bottom == goalRect.Top; // 각 스테이지
+
+
+                    if (isOnGoal == true) // 각 스테이지
+                    {
+                        _jumpStageClear = true;
+                        break;
+                    }
+
+                }
+            }
+
             // 화면 다시 그리기
             this.Invalidate();   
         }
@@ -321,12 +360,14 @@ namespace JumpGame
             }
 
             // 골인 지점으로 왔을 때 해당 좌표에서 위에 키를 누르면 보스 스테이지로 이동시켜주기.
-            if ( 1 < CharacterStatus.GetX() && CharacterStatus.GetX() < 3 && CharacterStatus.GetY() == 2) // x좌표는 200 ~ 240까지 y좌표는 고정
+            if (_jumpStageClear == true && _bossStageInitialized == false)
             {
                 if (e.KeyCode == Keys.Up)
                 {
                     // Boss 스테이지로 이동하는 메서드 실행.
                     _currentStage = "BossStage";
+                    BossStage.CreateStage(this);
+                    _bossStageInitialized = true;
                 }
             }
 
@@ -389,6 +430,11 @@ namespace JumpGame
 
             // 검기 발사
             _characterStatus.ShootProjectiles(g, _cameraDisplay.X, _cameraDisplay.Y);
+
+            if (_currentStage == "BossStage")
+            {
+                _enemyController?.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+            }
         }
 
         /// <summary>
