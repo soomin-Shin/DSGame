@@ -113,31 +113,33 @@ namespace JumpGame
         /// 불꽃의 위치를 업데이트합니다.
         /// </summary>
         /// <param name="screenWidth">현재 게임 화면의 너비(JumpStage 833, BossStage 1536)</param>
-        public bool Update(int screenWidth) // screenWidth 인자 추가
+        public bool Update(int screenWidth)
         {
             if (_isActive)
             {
-                _position.X += _direction * _speed; // 양쪽 방향으로 이동
+                _position.X += _direction * _speed;
 
-                // 불꽃이 화면 경계를 벗어났을 때 위치를 재설정하여 반복
-                if (_direction == -1) // 오른쪽에서 왼쪽으로 이동하는 경우
+                // 불꽃이 화면 밖으로 나가면 초기 X좌표에서 다시 시작
+                if (_direction == -1) // 왼쪽으로 이동하는 불꽃
                 {
-                    // 불꽃이 화면 왼쪽 끝(X=0)을 벗어나면
-                    if (_position.X + _projectileImage.Width < 0)
+                    // 불꽃이 화면 왼쪽 끝을 완전히 벗어나면
+                    if (_position.X < -_projectileImage.Width)
                     {
-                        _position.X = screenWidth; // 화면 오른쪽 끝에서 다시 나타나도록 리셋
+                        // 초기 X좌표에서 다시 시작
+                        _position.X = _initialX;
                     }
                 }
-                else // _direction == 1, 왼쪽에서 오른쪽으로 이동하는 경우
+                else // _direction == 1 (오른쪽으로 이동하는 불꽃)
                 {
-                    // 불꽃이 화면 오른쪽 끝을 벗어나면
+                    // 불꽃이 화면 오른쪽 끝을 완전히 벗어나면
                     if (_position.X > screenWidth)
                     {
-                        _position.X = -_projectileImage.Width; // 이미지 너비만큼 왼쪽 밖에서 시작하도록 리셋
+                        // 초기 X좌표에서 다시 시작
+                        _position.X = _initialX;
                     }
                 }
             }
-            return true; // _isActive 대신 항상 true 반환
+            return true;
         }
 
         /// <summary>

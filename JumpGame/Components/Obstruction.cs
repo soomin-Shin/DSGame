@@ -12,8 +12,8 @@ namespace JumpGame.Model
         private List<Projectile> _projectileLines;
         private Image _fireBallImage;
 
-        private const int FIRE_START_X_RIGHT = 745;
-        private const int FIRE_START_X_LEFT = 93;
+        private const int FIRE_START_X_RIGHT = 95;
+        private const int FIRE_START_X_LEFT = 739;
         private const int _FIRE_SPEED = 5;
 
         public Obstruction()
@@ -23,13 +23,13 @@ namespace JumpGame.Model
             _projectileLines = new List<Projectile>();
 
             // Projectile 생성자 호출 시 타입과 방향 인자 추가
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 417, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 287, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, -304, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 137, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, -484, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, -419, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 278, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            //_projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 417, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 459, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 634, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 783, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 924, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 1254, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 1392, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
             //_projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 100, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
         }
 

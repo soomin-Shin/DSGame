@@ -519,7 +519,27 @@ namespace JumpGame
         /// <param name="e"></param>
         private void CoordinateCheckClick(object sender, MouseEventArgs e)
         {
-            Debug.WriteLine($"{e.X},{e.Y}");
+            // 폼 내에서의 마우스 클릭 좌표 (클라이언트 좌표)
+            int clientX = e.X;
+            int clientY = e.Y;
+
+            // 카메라의 현재 월드 좌표
+            // CameraDisplay는 CameraUpdate를 통해 _x와 _y를 가지고 있습니다.
+            // CameraDisplay.X는 카메라의 X좌표, CameraDisplay.Y는 카메라의 Y좌표입니다.
+            int cameraOffsetX = _cameraDisplay.X;
+            int cameraOffsetY = _cameraDisplay.Y;
+
+            // 클라이언트 좌표를 게임 월드 좌표로 변환
+            // 화면에 그려질 때 (객체 X - cameraX, 객체 Y - cameraY)로 그리므로,
+            // 반대로 월드 좌표를 얻으려면 (클라이언트 X + cameraX, 클라이언트 Y + cameraY)를 해야 합니다.
+            int worldX = clientX + cameraOffsetX;
+            int worldY = clientY + cameraOffsetY;
+
+            // Debug.WriteLine으로 콘솔에 출력 (디버깅 용)
+            System.Diagnostics.Debug.WriteLine($"Mouse Clicked - Client: ({clientX}, {clientY}), World: ({worldX}, {worldY})");
+
+            // 이 worldX, worldY 값을 사용하여 원하는 로직을 수행할 수 있습니다.
+            // 예: 해당 좌표에 불꽃을 생성하거나, 특정 오브젝트의 위치를 확인하는 등
         }
     }
 }
