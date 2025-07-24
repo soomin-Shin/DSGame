@@ -6,19 +6,52 @@ namespace JumpGame
 {
     public class EnemyController
     {
+        // 보스 객체
         private Boss _boss;
+        // 화염구 이미지
         private Image _fireBallImage;
+        // 보스의 발사체 리스트
         private List<Projectile> _projectiles = new List<Projectile>();
+        //클리어 이미지
+        private Image _clearImage;
+        private bool _gameCleared = false;
 
+        public bool GameCleared
+        {
+            get
+            {
+                return _gameCleared;
+            }
+            set
+            {
+                _gameCleared = value;
+            }
+        }
         public EnemyController(Image bossIdle, Image bossAttack, Image fireballImage, Image bossDeadImage, Point bossSpawn, CharacterStatus player)
         {
             _fireBallImage = fireballImage;
             _boss = new Boss(bossIdle, bossAttack, fireballImage, bossDeadImage, bossSpawn.X, bossSpawn.Y, player);
         }
 
-        public void Update()
+        public void Update(List<Projectile> playerProjectiles)
         {
-            _boss?.Update(_projectiles, _fireBallImage);
+            if (_boss != null && !_boss.IsDead)
+            {
+                _boss.Update(_projectiles, _fireBallImage);
+
+                foreach (var sword in playerProjectiles)
+                {
+                    if (sword.IsActive && sword.Type == ProjectileType.SwordEnergy && _boss.GetHitBox().IntersectsWith(sword.GetHitBox()))
+                    {
+                        sword.IsActive = false;
+                        _boss.TakeDamage(20); // 맞을 때마다 20 감소
+                        if (_boss.IsDead)
+                        {
+                            _gameCleared = true;
+                        }
+                    }
+                }
+            }
 
             for (int i = _projectiles.Count - 1; i >= 0; i--)
             {
@@ -33,7 +66,6 @@ namespace JumpGame
 
             foreach (var proj in _projectiles)
             {
-                // FireBall용 렌더링
                 proj.FireBallDraw(g, cameraX, cameraY);
             }
         }
@@ -51,7 +83,17 @@ namespace JumpGame
             private int _cooldownMax = 60;
             private CharacterStatus _target;
             private bool _isDead = false;
-
+            public bool IsDead
+            {
+                get
+                {
+                    return _isDead;
+                }
+                set
+                {
+                    _isDead = value;
+                }
+            }
             public Boss(Image idle, Image attack, Image fireBall, Image deadImage, int x, int y, CharacterStatus target)
             {
                 _idleImage = idle;
@@ -75,6 +117,8 @@ namespace JumpGame
 
             private void Fire(List<Projectile> projectiles, Image fireBallImage)
             {
+                if (_target == null) return;
+
                 float tx = _target.GetX() - _position.X;
                 float ty = _target.GetY() - _position.Y;
                 float len = (float)Math.Sqrt(tx * tx + ty * ty);

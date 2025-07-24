@@ -205,6 +205,7 @@ namespace JumpGame
         }
         private bool _bossStageInitialized = false;
         private bool _jumpStageClear = false; // jumpstage로 이동
+        private bool _gameClearDisplayed = false;
 
         public AdventureOfKnight()
         {
@@ -247,11 +248,25 @@ namespace JumpGame
             {
 
             }
+            if (_enemyController?.GameCleared == true && !_gameClearDisplayed)
+            {
+                _gameClearDisplayed = true;
+                _gameTimer.Stop();
+                Invalidate();
+                return;
+            }
         }
 
         // 게임 상태 업데이트
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            if (_enemyController?.GameCleared == true && !_gameClearDisplayed)
+            {
+                _gameClearDisplayed = true;
+                _gameTimer.Stop();
+                Invalidate();
+                return;
+            }
             // 시간 업데이트
             GameStats.StatsUpdateTimer();
 
@@ -281,6 +296,8 @@ namespace JumpGame
                 _characterStatus.MoveRight();
             }
 
+            // 점프 스테이지에서 캐릭터 낙하 시 초기 위치로 리셋
+            _jumpStage.JumpStageReset(_characterStatus);
 
             // 모든 발판 리스트 순서대로 업데이트
             for (int i = 0; i < _platforms.Count; i++)
@@ -297,12 +314,13 @@ namespace JumpGame
             _cameraDisplay.CameraUpdate(_characterStatus.GetX(), _characterStatus.GetY());
 
             // 적 상태 확인
-            _enemyController?.Update();
+            _enemyController?.Update(CharacterStatus.SwordProjectiles);
 
             int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
 
             _obstruction.UpdateAllObstacles(currentScreenWidth); // 수정된 메서드 호출
-                                                                 // 점프 스테이지의 아이템 리스트
+            
+            // 점프 스테이지의 아이템 리스트
             List<Item> items = _jumpStage.ItemManager.GetItems();
             // 캐릭터 히트박스
             Rectangle charRect = _characterStatus.GetHitBox();
@@ -470,6 +488,13 @@ namespace JumpGame
             if (_currentStage == "BossStage")
             {
                 _enemyController?.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+                if (_gameClearDisplayed)
+                {
+                    Font clearFont = new Font("Arial", 40, FontStyle.Bold);
+                    Brush clearBrush = Brushes.Yellow;
+                    g.DrawString("용을 죽이고 보물을 얻었다!", clearFont, clearBrush, 500, 300);
+                    g.DrawString($"SCORE: {GameStats.Score}", clearFont, clearBrush, 500, 360);
+                }
             }
         }
 
