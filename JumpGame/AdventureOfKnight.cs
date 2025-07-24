@@ -281,6 +281,8 @@ namespace JumpGame
                 _characterStatus.MoveRight();
             }
 
+            // 점프 스테이지에서 캐릭터 낙하 시 초기 위치로 리셋
+            _jumpStage.JumpStageReset(_characterStatus);
 
             // 모든 발판 리스트 순서대로 업데이트
             for (int i = 0; i < _platforms.Count; i++)
@@ -302,7 +304,8 @@ namespace JumpGame
             int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
 
             _obstruction.UpdateAllObstacles(currentScreenWidth); // 수정된 메서드 호출
-                                                                 // 점프 스테이지의 아이템 리스트
+            
+            // 점프 스테이지의 아이템 리스트
             List<Item> items = _jumpStage.ItemManager.GetItems();
             // 캐릭터 히트박스
             Rectangle charRect = _characterStatus.GetHitBox();

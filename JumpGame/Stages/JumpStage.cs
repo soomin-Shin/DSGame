@@ -91,7 +91,7 @@ namespace JumpGame.Stages
             now.Platforms = platforms;
             // 배경 이미지
             now.BackgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
-            // 초기 캐릭터 위치
+            // 캐릭터 시작 좌표
             now.CharacterStatus = new CharacterStatus(300, 1360);
             // 카메라 
             now.CameraDisplay = new CameraDisplay(now.ClientSize.Width, now.ClientSize.Height, now.BackgroundImage.Height);
@@ -100,6 +100,9 @@ namespace JumpGame.Stages
             now.JumpStage.ItemManager = new Item();
             // 5개 아이템 랜덤 발판 위치에 배치
             now.JumpStage.ItemManager.GenerateItems(platforms, 5);
+            // 캐릭터 시작 좌표를 JumpStage에 저장 (JumpStageReset에서 사용됨)
+            now.JumpStage._x = 300;
+            now.JumpStage._y = 1360;
 
         }
 
@@ -112,7 +115,7 @@ namespace JumpGame.Stages
             }
         }
         // 점프 스테이지 캐릭터 초기화 
-        public void CheckResetCondition(CharacterStatus character)
+        public void JumpStageReset(CharacterStatus character)
         {
             // 캐릭터가 초기 위치 보다 100만큼 아래로 떨어졌는지 확인
             if (character.GetY() > _y + 100)
