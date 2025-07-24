@@ -66,6 +66,16 @@ namespace JumpGame
             return _y;
         }
 
+        private List<Projectile> _swordProjectiles = new List<Projectile>();
+        private int _swordCooldown = 0;
+        private int _swordCooldownMax = 40;
+        private Image _swordImage = Image.FromFile("Assets/Image/SwordEnergy.png");
+
+        public List<Projectile> SwordProjectiles
+        {
+            get { return _swordProjectiles; }
+        }
+
         public CharacterStatus(int startX, int startY)
         {
             _x = startX;
@@ -124,6 +134,39 @@ namespace JumpGame
 
             // 상태 변경
             _currentState = CharacterState.Jump;
+        }
+
+        public void ShootSword()
+        {
+            if (_swordCooldown == 0)
+            {
+                int direction = _currentState == CharacterState.MoveLeft ? -1 : 1;
+                int speed = 7;
+                int startX = _x + (_width / 2);
+                int startY = _y + 10;
+
+                _swordProjectiles.Add(new Projectile(startX, startY, speed, _swordImage, ProjectileType.SwordEnergy, direction));
+                _swordCooldown = _swordCooldownMax;
+            }
+        }
+
+        public void UpdateProjectiles()
+        {
+            if (_swordCooldown > 0) _swordCooldown--;
+
+            for (int i = _swordProjectiles.Count - 1; i >= 0; i--)
+            {
+                if (!_swordProjectiles[i].Update())
+                    _swordProjectiles.RemoveAt(i);
+            }
+        }
+
+        public void ShootProjectiles(Graphics g, int cameraX, int cameraY)
+        {
+            foreach (var p in _swordProjectiles)
+            {
+                p.SwordEnergyDraw(g, cameraX, cameraY);
+            }
         }
 
         // 현재 착지 여부 반환

@@ -54,6 +54,7 @@
     <Compile Include="AdventureOfKnight.Designer.cs">
       <DependentUpon>AdventureOfKnight.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\EnemyController.cs" />
     <Compile Include="Components\Item.cs" />
     <Compile Include="Components\SoundEffect.cs" />
     <Compile Include="Components\Projectile.cs" />
@@ -68,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Stages\BossStage.cs" />
     <Compile Include="Stages\JumpStage.cs" />
     <Compile Include="View\PauseMenuControl.cs">
       <SubType>UserControl</SubType>

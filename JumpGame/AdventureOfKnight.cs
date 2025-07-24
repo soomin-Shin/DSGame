@@ -48,8 +48,30 @@ namespace JumpGame
         }
         // 발판 리스트
         private List<Platform> _platforms;
+        public List<Platform> Platforms
+        {
+            get
+            {
+                return _platforms;
+            }
+            set
+            {
+                _platforms = value;
+            }
+        }
         // 배경 화면
         private Image _backgroundImage;
+        public Image BackgroundImage
+        {
+            get
+            {
+                return _backgroundImage;
+            }
+            set
+            {
+                _backgroundImage = value;
+            }
+        }
         // 점프 스테이지
         private JumpStage _jumpStage;
         public JumpStage JumpStage
@@ -166,6 +188,11 @@ namespace JumpGame
                 _currentStage = value;
             }
         }
+
+        // Enemy Controller (보스 + 검기)
+        private EnemyController _enemyController;
+        private bool _bossStageInitialized = false;
+
         public AdventureOfKnight()
         {
             // 폼 사이즈 변경 불가
@@ -201,7 +228,8 @@ namespace JumpGame
             // 만약 스테이지 처음 선언할때 바꿔주고 싶으면 여기에 넣으시오.
             if (_currentStage == "JumpStage")
             {
-                JumpStage.CreateStage();
+                //JumpStage.CreateStage();
+                BossStage.CreateStage(this);
             }
             else
             {
@@ -248,7 +276,10 @@ namespace JumpGame
                 // i번째 발판 위치, 상태 업데이트
                 _platforms[i].PlatformUpdate();
             }
-
+            
+            // 투사체 상태 확인
+            _characterStatus.UpdateProjectiles();
+            _characterStatus.CharacterUpdate(_platforms, _cameraDisplay.Y);
             // 화면 다시 그리기
             this.Invalidate();   
         }
@@ -280,6 +311,12 @@ namespace JumpGame
                     PauseGame();
                 }
             }
+            
+            //검기 발사
+            if (e.KeyCode == Keys.Q)
+            {
+                _characterStatus.ShootSword();
+            }
 
             // 골인 지점으로 왔을 때 해당 좌표에서 위에 키를 누르면 보스 스테이지로 이동시켜주기.
             if ( 1 < CharacterStatus.GetX() && CharacterStatus.GetX() < 3 && CharacterStatus.GetY() == 2) // x좌표는 200 ~ 240까지 y좌표는 고정
@@ -287,8 +324,10 @@ namespace JumpGame
                 if (e.KeyCode == Keys.Up)
                 {
                     // Boss 스테이지로 이동하는 메서드 실행.
+                    _currentStage = "BossStage";
                 }
             }
+
         }
 
         // 키를 뗄 때
@@ -344,7 +383,10 @@ namespace JumpGame
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
 
             // 장애물 그리기
-            _obstruction.draw(g);
+            //_obstruction.draw(g);
+
+            // 검기 발사
+            _characterStatus.ShootProjectiles(g, _cameraDisplay.X, _cameraDisplay.Y);
         }
 
         /// <summary>
