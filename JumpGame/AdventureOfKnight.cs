@@ -1,4 +1,5 @@
 ﻿using JumpGame.Model;
+using JumpGame.Components;
 using JumpGame.View;
 using JumpGame.Stages;
 using System;
@@ -301,6 +302,34 @@ namespace JumpGame
             int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
 
             _obstruction.UpdateAllObstacles(currentScreenWidth); // 수정된 메서드 호출
+                                                                 // 점프 스테이지의 아이템 리스트
+            List<Item> items = _jumpStage.ItemManager.GetItems();
+            // 캐릭터 히트박스
+            Rectangle charRect = _characterStatus.GetHitBox();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                // 아이템이 캐릭터 히트박스와 겹치는지 검사
+                if (items[i].Area.IntersectsWith(charRect))
+                {   // 아이템이 루비일 경우 점수 1000점 추가
+                    if (items[i].Type == ItemType.Ruby)
+                    {
+                        GameStats.Score += 1000;
+                    }
+                    // 아이템이 사파이어일 경우 점수 500점 추가
+                    else if (items[i].Type == ItemType.Sapphire)
+                    {
+                        GameStats.Score += 500;
+                    }
+                    // 아이템이 에메랄드일 경우 점수 100점 추가
+                    else if (items[i].Type == ItemType.Emerald)
+                    {
+                        GameStats.Score += 100;
+                    }
+                    items.RemoveAt(i);
+                    break;
+                }
+            }
 
             // 골인 발판 판정
             for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
@@ -310,8 +339,6 @@ namespace JumpGame
                 {
                     // 골인 발판의 영역을 goalRect에 저장
                     Rectangle goalRect = _platforms[i].Area;  // 각 스테이지
-                    // 캐릭터 히트박스를 charRect에 저장
-                    Rectangle charRect = CharacterStatus.GetHitBox();  // 각 스테이지
 
                     // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
                     bool isOnGoal = charRect.Bottom == goalRect.Top; // 각 스테이지
@@ -325,6 +352,7 @@ namespace JumpGame
 
                 }
             }
+
 
             // 화면 다시 그리기
             this.Invalidate();   
@@ -426,6 +454,9 @@ namespace JumpGame
 
             // 캐릭터 그리기
             _characterStatus.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+
+            // 아이템 그리기
+            _jumpStage.DrawItems(g, _cameraDisplay.X, _cameraDisplay.Y);
 
             // UI 요소 그리기
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);

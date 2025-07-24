@@ -8,14 +8,6 @@ using JumpGame.Components;
 
 namespace JumpGame.Stages
 {
-    // 아이템 타입
-    public enum ItemType
-    {
-        Ruby,
-        Sapphire,
-        Emerald
-    }
-
 
     public class JumpStage
     {
@@ -38,6 +30,21 @@ namespace JumpGame.Stages
             {
                 _platforms = value;
             }
+        }
+
+        // 아이템 관리
+        private Item _itemManager;
+        public Item ItemManager
+        {
+            get
+            {
+                return _itemManager;
+            }
+            set
+            {
+                _itemManager = value;
+            }
+
         }
 
         // 캐릭터 X 좌표
@@ -80,16 +87,30 @@ namespace JumpGame.Stages
             // 폼 크기
             now.Width = 833;
             // 게임 화면 높이
-            now.Height = 600; 
-            now.Platforms = platforms;  
-            now.BackgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");  
-            now.CharacterStatus = new CharacterStatus(300, 1360);  
-            now.CameraDisplay = new CameraDisplay(now.ClientSize.Width, now.ClientSize.Height, now.BackgroundImage.Height);  
-            // 좌표 전달 위해 JumpStage에도 보존
+            now.Height = 600;
+            now.Platforms = platforms;
+            // 배경 이미지
+            now.BackgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
+            // 초기 캐릭터 위치
+            now.CharacterStatus = new CharacterStatus(300, 1360);
+            // 카메라 
+            now.CameraDisplay = new CameraDisplay(now.ClientSize.Width, now.ClientSize.Height, now.BackgroundImage.Height);
             now.JumpStage = new JumpStage();
-           
+            // 아이템 관리
+            now.JumpStage.ItemManager = new Item();
+            // 5개 아이템 랜덤 발판 위치에 배치
+            now.JumpStage.ItemManager.GenerateItems(platforms, 5);
+
         }
 
+        // 아이템 그리기
+        public void DrawItems(Graphics g, int offsetX, int offsetY)
+        {
+            if (_itemManager != null)
+            {
+                _itemManager.DrawItems(g, offsetX, offsetY);
+            }
+        }
         // 점프 스테이지 캐릭터 초기화 
         public void CheckResetCondition(CharacterStatus character)
         {
