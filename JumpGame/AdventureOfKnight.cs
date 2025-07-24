@@ -154,7 +154,7 @@ namespace JumpGame
         // UI 관리 객체 추가
         private Ui _gameUI;
         private Obstruction _obstruction;
-        private string _currentStage;
+        private string _currentStage = "JumpStage";
         public string CurrentStage
         {
             get
