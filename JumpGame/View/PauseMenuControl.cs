@@ -43,8 +43,8 @@ namespace JumpGame.View
         public void RestartGame()
         {
             // JumpStage에서 시작 좌표 가져오기
-            int JumpX = _parentJumpGameForm.Jumpstage.GetX();
-            int JumpY = _parentJumpGameForm.Jumpstage.GetY();
+            int JumpX = _parentJumpGameForm.JumpStage.GetX();
+            int JumpY = _parentJumpGameForm.JumpStage.GetY();
 
             // 게임 상태 초기화
             _parentJumpGameForm.CameraDisplay.CameraReset();
