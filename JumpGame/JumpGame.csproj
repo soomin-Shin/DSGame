@@ -54,6 +54,7 @@
     <Compile Include="AdventureOfKnight.Designer.cs">
       <DependentUpon>AdventureOfKnight.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Item.cs" />
     <Compile Include="Components\SoundEffect.cs" />
     <Compile Include="Components\Projectile.cs" />
     <Compile Include="Components\GameStats.cs" />

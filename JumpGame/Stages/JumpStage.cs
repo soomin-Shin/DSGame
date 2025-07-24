@@ -4,10 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using JumpGame.Model;
+using JumpGame.Components;
 
 namespace JumpGame.Stages
 {
+    // 아이템 타입
+    public enum ItemType
+    {
+        Ruby,
+        Sapphire,
+        Emerald
+    }
+
+
     public class JumpStage
     {
         // JumpStage 캐릭터 X 좌표
@@ -21,6 +30,9 @@ namespace JumpGame.Stages
 
         // 배경 화면
         private Image _backgroundImage;
+
+        // 아이템
+        private Item _item; 
 
         // 폼 너비
         private int _formWidth;
@@ -38,18 +50,6 @@ namespace JumpGame.Stages
             set
             {
                 _platforms = value;
-            }
-        }
-
-        public Image BackgroundImage
-        {
-            get
-            {
-                return _backgroundImage;
-            }
-            set
-            {
-                _backgroundImage = value;
             }
         }
 
@@ -88,6 +88,10 @@ namespace JumpGame.Stages
             // 폼 크기
             _formWidth = formWidth;
             _formHeight = formHeight;
+
+            _item = new Item();
+            // 아이템 5개 생성
+            _item.GenerateItems(_platforms, 5); 
         }
         // 생성자 함수
         public JumpStage()
@@ -111,6 +115,7 @@ namespace JumpGame.Stages
             // 발판 타입 배열
             PlatformType[] platformTypes = { PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.StepDisappear, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Goal };
 
+            // 발판 배열에 추가
             for (int i = 0; i < platformXs.Length; i++)
             {
                 Rectangle area = new Rectangle(platformXs[i], platformYs[i], platformWidths[i], platformHeights[i]);
