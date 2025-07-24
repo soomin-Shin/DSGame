@@ -20,6 +20,10 @@ namespace JumpGame
         private int _initialX; // 초기 X 위치를 저장할 변수 추가
         private int _direction; // 왼쪽: -1, 오른쪽: 1
         private ProjectileType _type;
+        
+        // 검기 사거리
+        private int _distanceTraveled = 0;
+        private int _maxDistance = 300;
 
         // 불꽃의 현재 위치를 가져오거나 설정
         public Point Position
@@ -83,19 +87,30 @@ namespace JumpGame
         /// 위치를 업데이트
         /// </summary>
         /// <returns>불꽃이 화면을 벗어나 비활성화되었는지 여부를 반환</returns>
-        public bool Update()
+        public bool Update(ProjectileType type)
         {
-            if (_isActive)
+            if(type == ProjectileType.FireBall)
             {
-                _position.X += _direction * _speed; //양쪽 방향
+                _position.X += _speed * _direction;
+                return _isActive;
+            }
+            else if(type == ProjectileType.SwordEnergy)
+            {
+                _position.X += _speed * _direction;
+                _distanceTraveled += Math.Abs(_speed);
 
-                // 불꽃이 화면 왼쪽 끝(X=0)을 벗어나면 비활성화
-                if (_position.X + _projectileImage.Width < 0 || _position.X > 1000)
+                if (_distanceTraveled >= _maxDistance)
                 {
                     _isActive = false;
                 }
+
+                return _isActive;
             }
-            return _isActive;
+            else
+            {
+                _position.X += _speed * _direction;
+                return _isActive;
+            }
         }
 
         /// <summary>
