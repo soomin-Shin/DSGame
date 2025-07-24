@@ -22,6 +22,12 @@ namespace JumpGame.Stages
         // 배경 화면
         private Image _backgroundImage;
 
+        // 폼 너비
+        private int _formWidth;
+
+        // 폼 높이
+        private int _formHeight;
+
 
         public List<Platform> Platforms
         {
@@ -59,7 +65,19 @@ namespace JumpGame.Stages
             return _y;
         }
 
-        public JumpStage(List<Platform> platforms, Image bg, int startX, int startY)
+        // 캐릭터 X 좌표
+        public int FormWidth()
+        {
+            return _formWidth;
+        }
+
+        // 캐릭터 Y 좌표
+        public int FormHeight()
+        {
+            return _formHeight;
+        }
+
+        public JumpStage(List<Platform> platforms, Image bg, int startX, int startY, int formWidth, int formHeight)
         {
             // 발판 리스트
             _platforms = platforms;
@@ -67,6 +85,9 @@ namespace JumpGame.Stages
             _backgroundImage = bg;
             _x = startX;
             _y = startY;
+            // 폼 크기
+            _formWidth = formWidth;
+            _formHeight = formHeight;
         }
         // 생성자 함수
         public JumpStage()
@@ -74,35 +95,40 @@ namespace JumpGame.Stages
         }
 
         // 스테이지 생성 함수
-        public static JumpStage CreateStage()
+        public JumpStage CreateStage()
         {
-            // 발판 목록 정의(아래에 각 발판 좌표/종류를 배열에 추가)
-            var _platforms = new List<Platform>()
+            // 발판 목록 정의
+            var platforms = new List<Platform>();
+
+            // 발판 x 좌표 배열
+            int[] platformXs = { 220, 475, 55, 295, 650, 120, 475, 295, 550, 145, 395, 150, 320 };
+            // 발판 y 좌표 배열
+            int[] platformYs = { 1420, 1290, 1290, 1130, 1130, 970, 970, 810, 680, 615, 485, 360, 228 };
+            // 발판 너비 배열
+            int[] platformWidths = { 165, 160, 125, 165, 130, 160, 160, 160, 160, 160, 165, 155, 190 };
+            // 발판 높이 배열
+            int[] platformHeights = { 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45 };
+            // 발판 타입 배열
+            PlatformType[] platformTypes = { PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.StepDisappear, PlatformType.Normal, PlatformType.Normal, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Goal };
+
+            for (int i = 0; i < platformXs.Length; i++)
             {
-                // (x, y, width, height), PlatformType
-                new Platform(new Rectangle(220, 1420, 165, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(475, 1290, 160, 45), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(55, 1290, 125, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(295, 1130, 165, 45), PlatformType.Normal),          
-                new Platform(new Rectangle(650, 1130, 130, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(120, 970, 160, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(475, 970, 160, 45), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(295, 810, 160, 45), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(550, 680, 160, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(145, 615, 160, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(395, 485, 165, 45), PlatformType.Normal),           
-                new Platform(new Rectangle(150, 360, 155, 45), PlatformType.StepDisappear),    
-                new Platform(new Rectangle(320, 228, 190, 45), PlatformType.Goal)               
-            };
+                Rectangle area = new Rectangle(platformXs[i], platformYs[i], platformWidths[i], platformHeights[i]);
+                platforms.Add(new Platform(area, platformTypes[i]));
+            }
 
             //  배경 화면 로드
-            Image _backgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");
+            Image bg = Image.FromFile("Assets/Image/Stage1Map.png");
 
             // 플레이어 시작 위치
             int startX = 300;
             int startY = 1360;
 
-            return new JumpStage(_platforms, _backgroundImage, startX, startY);
+            // 폼 크기
+            int formWidth = 833;
+            int formHeight = 600;
+
+            return new JumpStage(platforms, bg, startX, startY, formWidth, formHeight);
         }
 
         // 점프 스테이지 캐릭터 초기화

@@ -51,16 +51,16 @@ namespace JumpGame
         // 배경 화면
         private Image _backgroundImage;
         // 점프 스테이지
-        private JumpStage _jumpstage;
-        public JumpStage Jumpstage
+        private JumpStage _jumpStage;
+        public JumpStage JumpStage
         {
             get
             {
-                return _jumpstage;
+                return _jumpStage;
             }
             set
             {
-                _jumpstage = value;
+                _jumpStage = value;
             }
         }
         // 게임 타이머
@@ -172,8 +172,8 @@ namespace JumpGame
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             // 화면 깜빡임 방지
             this.DoubleBuffered = true;
-            // Jumpstage
-            Jumpstage = new JumpStage();
+            // 점프 스테이지
+            JumpStage = new JumpStage();
             // 효과음 추가
             _soundEffect = new SoundEffect();
             // esc 추가
@@ -201,7 +201,7 @@ namespace JumpGame
             // 만약 스테이지 처음 선언할때 바꿔주고 싶으면 여기에 넣으시오.
             if (_currentStage == "JumpStage")
             {
-
+                JumpStage.CreateStage();
             }
             else
             {
