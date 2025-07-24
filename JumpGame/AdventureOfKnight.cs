@@ -312,7 +312,7 @@ namespace JumpGame
             _cameraDisplay.CameraUpdate(_characterStatus.GetX(), _characterStatus.GetY());
 
             // 적 상태 확인
-            _enemyController?.Update(CharacterStatus.SwordProjectiles);
+            _enemyController?.EnemyUpdate(CharacterStatus.SwordProjectiles);
 
             int currentScreenWidth = this.ClientSize.Width; // 현재 폼의 너비
 
@@ -482,7 +482,7 @@ namespace JumpGame
 
             if (_currentStage == "BossStage")
             {
-                _enemyController?.Draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+                _enemyController.EnemyDraw(g, _cameraDisplay.X, _cameraDisplay.Y);
                 if (_gameClearDisplayed)
                 {
                     Font clearFont = new Font("Arial", 40, FontStyle.Bold);

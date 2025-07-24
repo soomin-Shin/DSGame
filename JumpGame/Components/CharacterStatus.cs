@@ -74,8 +74,8 @@ namespace JumpGame
             set { _type = value; }
         }
         private List<Projectile> _swordProjectiles = new List<Projectile>();
-        private int _swordCooldown = 0;
-        private int _swordCooldownMax = 40;
+        private int _cooldown = 0;
+        private int _cooldownMax = 60;
         private Image _swordImage = Image.FromFile("Assets/Image/SwordEnergy.png");
 
         public List<Projectile> SwordProjectiles
@@ -143,9 +143,11 @@ namespace JumpGame
             _currentState = CharacterState.Jump;
         }
 
+        // 검기 공격 조작
         public void ShootSword()
         {
-            if (_swordCooldown == 0)
+            //쿨타임이 찼을때
+            if (_cooldown == _cooldownMax)
             {
                 int direction = _currentState == CharacterState.MoveLeft ? -1 : 1;
                 int speed = 7;
@@ -153,14 +155,19 @@ namespace JumpGame
                 int startY = _y + 10;
 
                 _swordProjectiles.Add(new Projectile(startX, startY, speed, _swordImage, ProjectileType.SwordEnergy, direction));
-                _swordCooldown = _swordCooldownMax;
+                _cooldown = 0;
             }
         }
 
         public void UpdateProjectiles()
         {
-            if (_swordCooldown > 0) _swordCooldown--;
+            // 쿨타임
+            if (_cooldown < _cooldownMax)
+            {
+                _cooldown++;
+            }
 
+            // 사거리 벗어나면 삭제
             for (int i = _swordProjectiles.Count - 1; i >= 0; i--)
             {
                 if (!_swordProjectiles[i].Update(Type))
@@ -168,6 +175,7 @@ namespace JumpGame
             }
         }
 
+        // 검기 이펙트 발사
         public void ShootProjectiles(Graphics g, int cameraX, int cameraY)
         {
             foreach (var p in _swordProjectiles)

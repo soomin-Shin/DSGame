@@ -12,16 +12,24 @@ namespace JumpGame
         private Image _fireBallImage;
         // 보스의 발사체 리스트
         private List<Projectile> _projectiles = new List<Projectile>();
+        // 게임 클리어 여부 ( 보스 사망 )
         private bool _gameCleared = false;
 
         private ProjectileType _type = ProjectileType.FireBall;
         // 발사체 타입
         public ProjectileType Type
         {
-            get { return _type; }
-            set { _type = value; }
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
         }
 
+        // 게임 클리어 외부 접근
         public bool GameCleared
         {
             get
@@ -33,24 +41,29 @@ namespace JumpGame
                 _gameCleared = value;
             }
         }
-        public EnemyController(Image bossIdle, Image bossAttack, Image fireballImage, Image bossDeadImage, Point bossSpawn, CharacterStatus player)
+        // 적 생성자
+        public EnemyController(Image boss, Image bossAttack, Image fireballImage, Image bossDeadImage, Point bossSpawn, CharacterStatus player)
         {
             _fireBallImage = fireballImage;
-            _boss = new Boss(bossIdle, bossAttack, fireballImage, bossDeadImage, bossSpawn.X, bossSpawn.Y, player);
+            _boss = new Boss(boss, bossAttack, fireballImage, bossDeadImage, bossSpawn.X, bossSpawn.Y, player);
         }
 
-        public void Update(List<Projectile> playerProjectiles)
+        // 보스 애니메이션 및 발사체, 피격 판정
+        public void EnemyUpdate(List<Projectile> playerProjectiles)
         {
+            // 보스가 살아있으면
             if (_boss != null && !_boss.IsDead)
             {
-                _boss.Update(_projectiles, _fireBallImage);
+                _boss.BossUpdate(_projectiles, _fireBallImage);
 
+                // 플레이어 검기 불러와서 충돌 판정
                 foreach (var sword in playerProjectiles)
                 {
                     if (sword.IsActive && sword.Type == ProjectileType.SwordEnergy && _boss.GetHitBox().IntersectsWith(sword.GetHitBox()))
                     {
                         sword.IsActive = false;
-                        _boss.TakeDamage(20); // 맞을 때마다 20 감소
+                        // 맞을 때마다 20 감소
+                        _boss.BossTakeDamage(20); 
                         if (_boss.IsDead)
                         {
                             _gameCleared = true;
@@ -59,16 +72,23 @@ namespace JumpGame
                 }
             }
 
+            // 보스 발사체 리스트 갱신
             for (int i = _projectiles.Count - 1; i >= 0; i--)
             {
                 if (!_projectiles[i].Update(Type))
+                {
                     _projectiles.RemoveAt(i);
+                }
             }
         }
 
-        public void Draw(Graphics g, int cameraX, int cameraY)
+        // 보스 및 발사체 그리기
+        public void EnemyDraw(Graphics g, int cameraX, int cameraY)
         {
-            _boss?.Draw(g, cameraX, cameraY);
+            if (_boss != null)
+            {
+                _boss.BossDraw(g, cameraX, cameraY);
+            }
 
             foreach (var proj in _projectiles)
             {
@@ -76,19 +96,31 @@ namespace JumpGame
             }
         }
 
+        // 보스 클래스
         public class Boss
         {
-            private Image _idleImage;
+            // 보스 이미지
+            private Image _baseImage;
+            // 보스 공격 이미지
             private Image _attackImage;
+            // 보스 사망 이미지
             private Image _deadImage;
+            // 보스 공격 방향
             private Point _position;
+            // 보스 키
             private int _width = 481;
+            // 보스 몸
             private int _height = 442;
+            // 보스 체력
             private int _health = 100;
+            // 보스 공격 쿨타임
             private int _cooldown = 0;
             private int _cooldownMax = 60;
+            // 타겟 캐릭터
             private CharacterStatus _target;
+            // 보스 사망 여부
             private bool _isDead = false;
+
             public bool IsDead
             {
                 get
@@ -100,46 +132,49 @@ namespace JumpGame
                     _isDead = value;
                 }
             }
-            public Boss(Image idle, Image attack, Image fireBall, Image deadImage, int x, int y, CharacterStatus target)
+            // 보스 생성자
+            public Boss(Image boss, Image attack, Image fireBall, Image deadImage, int x, int y, CharacterStatus target)
             {
-                _idleImage = idle;
+                _baseImage = boss;
                 _attackImage = attack;
                 _deadImage = deadImage;
                 _position = new Point(x, y);
                 _target = target;
             }
-
-            public void Update(List<Projectile> projectiles, Image fireBallImage)
+            // 쿨타임에 맞춰 보스 공격
+            public void BossUpdate(List<Projectile> projectiles, Image fireBallImage)
             {
-                if (_isDead) return;
+                if (_isDead)
+                {
+                    return;
+                }
 
                 _cooldown++;
                 if (_cooldown >= _cooldownMax)
                 {
-                    Fire(projectiles, fireBallImage);
+                    BossFire(projectiles, fireBallImage);
                     _cooldown = 0;
                 }
             }
 
-            private void Fire(List<Projectile> projectiles, Image fireBallImage)
+            //보스 공격
+            private void BossFire(List<Projectile> projectiles, Image fireBallImage)
             {
-                if (_target == null) return;
-
-                float tx = _target.GetX() - _position.X;
-                float ty = _target.GetY() - _position.Y;
-                float len = (float)Math.Sqrt(tx * tx + ty * ty);
-                float dx = tx / len;
-                int direction = dx >= 0 ? 1 : -1;
-
+                if (_target == null)
+                {
+                    return;
+                }
                 int speed = 5;
                 int startX = _position.X + 30;
                 int startY = _position.Y + 130;
 
-                projectiles.Add(new Projectile(startX, startY, speed, fireBallImage, ProjectileType.FireBall, direction));
+                projectiles.Add(new Projectile(startX, startY, speed, fireBallImage, ProjectileType.FireBall, -1));
             }
 
-            public void Draw(Graphics g, int cameraX, int cameraY)
+            // 보스 움직임 및 체력바 
+            public void BossDraw(Graphics g, int cameraX, int cameraY)
             {
+                // 카메라 위치에 맞게 동기화
                 int drawX = _position.X - cameraX;
                 int drawY = _position.Y - cameraY;
 
@@ -149,7 +184,8 @@ namespace JumpGame
                     return;
                 }
 
-                Image current = _cooldown < _cooldownMax / 2 ? _idleImage : _attackImage;
+                // 쿨다운이 절반 미만이면 기본 이미지. 쿨다운 절반 이상이면 입 벌리는 공격자세
+                Image current = _cooldown < _cooldownMax / 2 ? _baseImage : _attackImage;
                 g.DrawImage(current, drawX, drawY, _width, _height);
 
                 // 체력바
@@ -157,7 +193,8 @@ namespace JumpGame
                 g.DrawRectangle(Pens.Black, drawX, drawY - 10, _width, 5);
             }
 
-            public void TakeDamage(int dmg)
+            // 데미지 처리
+            public void BossTakeDamage(int dmg)
             {
                 _health -= dmg;
                 if (_health <= 0)

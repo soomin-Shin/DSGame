@@ -9,18 +9,13 @@ namespace JumpGame.Stages
 {
     class BossStage
     {
-        // JumpStage 캐릭터 X 좌표
-        private int _x;
-
-        // JumpStage 캐릭터 Y 좌표
-        private int _y;
-
         // 발판 리스트
         private List<Platform> _platforms;
 
         // 배경 화면
         private Image _backgroundImage;
 
+        // 적 클래스
         private EnemyController _enemyController;
 
         // 적 클래스
@@ -36,6 +31,7 @@ namespace JumpGame.Stages
             }
         }
 
+        // 발판 리스트
         public List<Platform> Platforms
         {
             get
@@ -48,6 +44,7 @@ namespace JumpGame.Stages
             }
         }
 
+        // 배경이미지
         public Image BackgroundImage
         {
             get
@@ -60,63 +57,55 @@ namespace JumpGame.Stages
             }
         }
 
-        // 캐릭터 X 좌표
-        public int GetX()
-        {
-            return _x;
-        }
-
-        // 캐릭터 Y 좌표
-        public int GetY()
-        {
-            return _y;
-        }
-
         // 스테이지 생성 함수
         public static void CreateStage(AdventureOfKnight game)
         {
+            // 발판 목록 정의
+            var platforms = new List<Platform>();
 
-            // 발판 목록 정의(아래에 각 발판 좌표/종류를 배열에 추가)
-            var _platforms = new List<Platform>()
+            // 발판 x 좌표 배열
+            int[] platformXs = { 200, 314, 500, 314, 500, 0, 590 };
+            // 발판 y 좌표 배열
+            int[] platformYs = { 525, 325, 325, 425, 425, 667, 601 };
+            // 발판 너비 배열
+            int[] platformWidths = { 160, 160, 160, 160, 160, 1536, 64 };
+            // 발판 높이 배열
+            int[] platformHeights = { 45, 45, 45, 45, 45, 166, 61 };
+            // 발판 타입 배열
+            PlatformType[] platformTypes = { PlatformType.Normal, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Normal, PlatformType.StepDisappear, PlatformType.Transparent, PlatformType.Transparent };
+
+            // 발판 배열에 추가
+            for (int i = 0; i < platformXs.Length; i++)
             {
-                // (x, y, width, height), PlatformType
-                new Platform(new Rectangle(200, 525, 160, 45), PlatformType.Normal),
-                new Platform(new Rectangle(314, 325, 160, 45), PlatformType.Normal),
-                new Platform(new Rectangle(500, 325, 160, 45), PlatformType.StepDisappear),
-                new Platform(new Rectangle(314, 425, 160, 45), PlatformType.Normal),
-                new Platform(new Rectangle(500, 425, 160, 45), PlatformType.StepDisappear),
-                new Platform(new Rectangle(0, 667, 1536, 166), PlatformType.Transparent),
-                new Platform(new Rectangle(590, 601, 64, 61), PlatformType.Transparent)
-            };
+                Rectangle area = new Rectangle(platformXs[i], platformYs[i], platformWidths[i], platformHeights[i]);
+                platforms.Add(new Platform(area, platformTypes[i]));
+            }
 
-            game.Width = 1536; // 각 스테이지
+            // 게임 화면 너비
+            game.Width = 1536; 
             // 게임 화면 높이
-            game.Height = 833; // 각 스테이지
-            game.Platforms = _platforms;  // 각 스테이지
-            game.BackgroundImage = Image.FromFile("Assets/Image/BossStage.png");  // 각 스테이지
-            game.CharacterStatus = new CharacterStatus(300, 500);  // 각 스테이지
-            game.CameraDisplay = new CameraDisplay(game.ClientSize.Width, game.ClientSize.Height, game.BackgroundImage.Height);  // 각 스테이지
+            game.Height = 833;
+            // 발판 생성
+            game.Platforms = platforms;
+            // 게임 배경화면
+            game.BackgroundImage = Image.FromFile("Assets/Image/BossStage.png");
+            // 플레이어 시작지점
+            game.CharacterStatus = new CharacterStatus(300, 500);
+            // 카메라 초기화
+            game.CameraDisplay = new CameraDisplay(game.ClientSize.Width, game.ClientSize.Height, game.BackgroundImage.Height);
 
-            // 보스 목록 정의
+            // 보스 목록 정의 ( 보스 기본그림, 보스 공격 그림, 보스 사망 그림, 보스 화염구 )
             Image boss = Image.FromFile("Assets/Image/Boss.png");
             Image bossAttack = Image.FromFile("Assets/Image/BossAttack.png");
             Image bossDead = Image.FromFile("Assets/Image/BossDead.png");
             Image fireball = Image.FromFile("Assets/Image/BossFireBall.png");
 
-            Point bossSpawn = new Point(864, 158); // 원하는 위치로 설정
-
-
+            // 보스 스폰 지점
+            Point bossSpawn = new Point(864, 158);
+            // 보스 동작 조작
             game.EnemyController = new EnemyController(boss, bossAttack, fireball, bossDead, bossSpawn, game.CharacterStatus);
 
-
-            //  배경 화면 로드
-
         }
 
-        // 보스 스테이지 캐릭터 초기화
-        public void BossStageReset(CharacterStatus character)
-        {
-            character.CharacterReset(_x, _y);
-        }
     }
 }
