@@ -65,41 +65,8 @@ namespace JumpGame.Stages
             return _y;
         }
 
-        // 캐릭터 X 좌표
-        public int FormWidth()
-        {
-            return _formWidth;
-        }
-
-        // 캐릭터 Y 좌표
-        public int FormHeight()
-        {
-            return _formHeight;
-        }
-
-        public JumpStage(List<Platform> platforms, Image bg, int startX, int startY, int formWidth, int formHeight)
-        {
-            // 발판 리스트
-            _platforms = platforms;
-            // 배경 화면
-            _backgroundImage = bg;
-            _x = startX;
-            _y = startY;
-            // 폼 크기
-            _formWidth = formWidth;
-            _formHeight = formHeight;
-
-            _item = new Item();
-            // 아이템 5개 생성
-            _item.GenerateItems(_platforms, 5); 
-        }
-        // 생성자 함수
-        public JumpStage()
-        {
-        }
-
         // 스테이지 생성 함수
-        public JumpStage CreateStage()
+        public static void CreateStage(AdventureOfKnight now)
         {
             // 발판 목록 정의
             var platforms = new List<Platform>();
@@ -122,18 +89,18 @@ namespace JumpGame.Stages
                 platforms.Add(new Platform(area, platformTypes[i]));
             }
 
-            //  배경 화면 로드
-            Image bg = Image.FromFile("Assets/Image/Stage1Map.png");
-
-            // 플레이어 시작 위치
-            int startX = 300;
-            int startY = 1360;
 
             // 폼 크기
-            int formWidth = 833;
-            int formHeight = 600;
-
-            return new JumpStage(platforms, bg, startX, startY, formWidth, formHeight);
+            now.Width = 833;
+            // 게임 화면 높이
+            now.Height = 600; 
+            now.Platforms = platforms;  
+            now.BackgroundImage = Image.FromFile("Assets/Image/Stage1Map.png");  
+            now.CharacterStatus = new CharacterStatus(300, 1360);  
+            now.CameraDisplay = new CameraDisplay(now.ClientSize.Width, now.ClientSize.Height, now.BackgroundImage.Height);  
+            // 좌표 전달 위해 JumpStage에도 보존
+            now.JumpStage = new JumpStage();
+           
         }
 
         // 점프 스테이지 캐릭터 초기화 
