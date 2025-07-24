@@ -28,19 +28,6 @@ namespace JumpGame.Stages
         // 발판 리스트
         private List<Platform> _platforms;
 
-        // 배경 화면
-        private Image _backgroundImage;
-
-        // 아이템
-        private Item _item; 
-
-        // 폼 너비
-        private int _formWidth;
-
-        // 폼 높이
-        private int _formHeight;
-
-
         public List<Platform> Platforms
         {
             get
