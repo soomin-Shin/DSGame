@@ -9,39 +9,36 @@ namespace JumpGame.Model
 {
     public class Obstruction
     {
-        private List<Projectile> _projectileLines; 
-        private Image _defaultFireBallImage; 
+        private List<Projectile> _projectileLines;
+        private Image _fireBallImage;
 
-        // 고정 시작 X 좌표 및 속도
-        private const int _FIRE_START_X = 753;
+        private const int FIRE_START_X_RIGHT = 753;
+        private const int FIRE_START_X_LEFT = 0;
         private const int _FIRE_SPEED = 5;
-
-        // 생성 간격 (각 라인마다 독립적으로 적용)
-        private const int _FIRE_SPAWN_INTERVAL = 150;
-
 
         public Obstruction()
         {
-
-            // 이미지 로드
-            _defaultFireBallImage = Resources.FireBallLeft;
+            _fireBallImage = Resources.FireBallLeft; // 리소스 경로 확인
 
             _projectileLines = new List<Projectile>();
 
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 417, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 300, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(_FIRE_START_X, 200, _FIRE_SPEED, _defaultFireBallImage, ProjectileType.FireBall, -1));
+            // Projectile 생성자 호출 시 타입과 방향 인자 추가
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 417, _FIRE_SPEED, _fireBallImage, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 300, _FIRE_SPEED, _fireBallImage, ProjectileType.FireBall, -1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 200, _FIRE_SPEED, _fireBallImage, ProjectileType.FireBall, 1));
+            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 100, _FIRE_SPEED, _fireBallImage, ProjectileType.FireBall, 1));
         }
 
 
         /// <summary>
         /// 모든 객체들과 설치류 장애물 객체들의 상태를 업데이트
         /// </summary>
-        public void UpdateAllObstacles()
+        /// <param name="screenWidth">현재 게임 화면의 너비</param>
+        public void UpdateAllObstacles(int screenWidth) // screenWidth 인자 추가
         {
             foreach (Projectile line in _projectileLines)
             {
-                line.Update(); // 각 라인의 업데이트 메서드 호출
+                line.Update(screenWidth); // 각 Projectile의 Update 메서드에 screenWidth 전달
             }
         }
 
