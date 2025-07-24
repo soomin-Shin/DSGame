@@ -63,12 +63,27 @@ namespace JumpGame.Model
         {
             GameTimer = new Timer();
             GameTimer.Interval = 1000; // 1000ms = 1초
+            GameTimer.Elapsed += (sender, e) => StatsUpdateTimer();
+
             GameTimer.Start(); // 타이머 시작
         }
-
+        /// <summary>
+        /// 시간 ++
+        /// </summary>
         public void StatsUpdateTimer()
         {
             ElapsedTime++;
+        }
+
+        /// <summary>
+        /// 타이머를 멈춥니다.
+        /// </summary>
+        public void StopTimer()
+        {
+            if (GameTimer != null && GameTimer.Enabled) // 타이머가 null이 아니고 현재 실행 중인지 확인
+            {
+                GameTimer.Stop();
+            }
         }
         /// <summary>
         /// 정보 리셋

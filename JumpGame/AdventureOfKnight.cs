@@ -232,6 +232,7 @@ namespace JumpGame
             GameTimer.Tick += GameTimer_Tick;
             // 게임 시작
             GameTimer.Start();
+
             this.KeyDown += GameForm_KeyDown; 
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
@@ -265,8 +266,6 @@ namespace JumpGame
                 Invalidate();
                 return;
             }
-            // 시간 업데이트
-            GameStats.StatsUpdateTimer();
 
             // 점프 입력 버퍼 관리
             // https://m.blog.naver.com/sorang226/223083889817
@@ -505,6 +504,7 @@ namespace JumpGame
         {
             _isGamePaused = false;
             GameTimer.Start(); // 게임 재개
+            GameStats.GameTimer.Start();
             _pauseMenu.Visible = false; // 메뉴 숨김
             this.Focus();
         }
@@ -515,6 +515,7 @@ namespace JumpGame
         {
             _isGamePaused = true;
             GameTimer.Stop(); // 게임 일시정지
+            GameStats.StopTimer();
             _pauseMenu.Visible = true; // 메뉴 표시
             this.Focus();
         }
