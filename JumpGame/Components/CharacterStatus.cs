@@ -66,6 +66,13 @@ namespace JumpGame
             return _y;
         }
 
+        private ProjectileType _type = ProjectileType.SwordEnergy;
+        // 발사체 타입
+        public ProjectileType Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
         private List<Projectile> _swordProjectiles = new List<Projectile>();
         private int _swordCooldown = 0;
         private int _swordCooldownMax = 40;
@@ -156,7 +163,7 @@ namespace JumpGame
 
             for (int i = _swordProjectiles.Count - 1; i >= 0; i--)
             {
-                if (!_swordProjectiles[i].Update())
+                if (!_swordProjectiles[i].Update(Type))
                     _swordProjectiles.RemoveAt(i);
             }
         }

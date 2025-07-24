@@ -12,9 +12,15 @@ namespace JumpGame
         private Image _fireBallImage;
         // 보스의 발사체 리스트
         private List<Projectile> _projectiles = new List<Projectile>();
-        //클리어 이미지
-        private Image _clearImage;
         private bool _gameCleared = false;
+
+        private ProjectileType _type = ProjectileType.FireBall;
+        // 발사체 타입
+        public ProjectileType Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
 
         public bool GameCleared
         {
@@ -55,7 +61,7 @@ namespace JumpGame
 
             for (int i = _projectiles.Count - 1; i >= 0; i--)
             {
-                if (!_projectiles[i].Update())
+                if (!_projectiles[i].Update(Type))
                     _projectiles.RemoveAt(i);
             }
         }
