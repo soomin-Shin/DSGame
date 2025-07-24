@@ -30,18 +30,18 @@
         {
             this.SuspendLayout();
             // 
-            // JumpGame
+            // AdventureOfKnight
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(431, 225);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "JumpGame";
-            this.Text = "JumpGame";
+            this.Name = "AdventureOfKnight";
+            this.Text = "AdventureOfKnight";
             this.ResumeLayout(false);
 
         }
