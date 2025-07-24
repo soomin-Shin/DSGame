@@ -3,17 +3,14 @@ using System.Drawing;
 
 namespace JumpGame
 {
-    /// <summary>
-    /// 발사체의 종류를 구분합니다.
-    /// </summary>
+    // 발사체의 종류를 구분합니다.
     public enum ProjectileType
     {
         FireBall,
         SwordEnergy
     }
-    /// <summary>
-    /// 개별 불꽃 이미지를 관리하는 클래스
-    /// </summary>
+
+    // 개별 불꽃 이미지를 관리하는 클래스
     public class Projectile
     {
         private Image _projectileImage;
@@ -24,43 +21,35 @@ namespace JumpGame
         private int _direction; // 왼쪽: -1, 오른쪽: 1
         private ProjectileType _type;
 
-        /// <summary>
-        /// 불꽃의 현재 위치를 가져오거나 설정
-        /// </summary>
+        // 불꽃의 현재 위치를 가져오거나 설정
         public Point Position
         {
             get { return _position; }
             set { _position = value; }
         }
 
-        /// <summary>
-        /// 불꽃의 활성화 상태를 가져오거나 설정
-        /// </summary>
+        // 불꽃의 활성화 상태를 가져오거나 설정
         public bool IsActive
         {
             get { return _isActive; }
             set { _isActive = value; }
         }
 
-        /// <summary>
-        /// 발사체 타입
-        /// </summary>
+        // 발사체 타입
         public ProjectileType Type
         {
             get { return _type; }
             set { _type = value; }
         }
 
-        /// <summary>
-        /// 히트박스 영역 반환
-        /// </summary>
+        // 히트박스 영역 반환
         public Rectangle GetHitBox()
         {
             return new Rectangle(_position.X, _position.Y, 30, 30);
         }
 
         /// <summary>
-        /// FireBall 클래스의 새 인스턴스를 초기화
+        /// Projectile 클래스의 새 인스턴스를 초기화
         /// </summary>
         public Projectile(int startX, int startY, int fireSpeed, Image image, ProjectileType type, int direction)
         {
@@ -91,7 +80,7 @@ namespace JumpGame
         }
 
         /// <summary>
-        /// 불꽃의 위치를 업데이트합니다.
+        /// 위치를 업데이트
         /// </summary>
         /// <returns>불꽃이 화면을 벗어나 비활성화되었는지 여부를 반환</returns>
         public bool Update()
@@ -110,7 +99,7 @@ namespace JumpGame
         }
 
         /// <summary>
-        /// 불꽃의 위치를 업데이트합니다.
+        /// 불꽃의 위치를 업데이트
         /// </summary>
         /// <param name="screenWidth">현재 게임 화면의 너비(JumpStage 833, BossStage 1536)</param>
         public bool Update(int screenWidth)

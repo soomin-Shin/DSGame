@@ -18,19 +18,17 @@ namespace JumpGame.Model
 
         public Obstruction()
         {
-            _fireBallImage = Resources.FireBallLeft; // 리소스 경로 확인
-
             _projectileLines = new List<Projectile>();
 
-            // Projectile 생성자 호출 시 타입과 방향 인자 추가
-            //_projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 417, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 459, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 634, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 783, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 924, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_RIGHT, 1254, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
-            _projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 1392, _FIRE_SPEED, Resources.FireBallLeft, ProjectileType.FireBall, -1));
-            //_projectileLines.Add(new Projectile(FIRE_START_X_LEFT, 100, _FIRE_SPEED, Resources.FireBallRight, ProjectileType.FireBall, 1));
+            int[] yCoordinates = { 459, 634, 783, 924, 1254, 1392 };
+            int[] startXCoordinates = { FIRE_START_X_RIGHT, FIRE_START_X_LEFT, FIRE_START_X_RIGHT, FIRE_START_X_LEFT, FIRE_START_X_RIGHT, FIRE_START_X_LEFT };
+            Image[] projectileImages = { Resources.FireBallRight, Resources.FireBallLeft, Resources.FireBallRight, Resources.FireBallLeft, Resources.FireBallRight, Resources.FireBallLeft };
+            int[] directions = { 1, -1, 1, -1, 1, -1 };
+
+            for (int i = 0; i < yCoordinates.Length; i++)
+            {
+                _projectileLines.Add(new Projectile(startXCoordinates[i], yCoordinates[i], _FIRE_SPEED, projectileImages[i], ProjectileType.FireBall, directions[i]));
+            }
         }
 
 
