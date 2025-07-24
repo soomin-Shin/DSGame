@@ -431,7 +431,7 @@ namespace JumpGame
             _gameUI.DrawScoreUI(g, this.ClientSize.Width, this.ClientSize.Height);
 
             // 장애물 그리기
-            _obstruction.draw(g, _cameraDisplay.X, _cameraDisplay.Y);
+            _obstruction.DrawAllObstacles(g, _cameraDisplay.X, _cameraDisplay.Y);
 
             // 검기 발사
             _characterStatus.ShootProjectiles(g, _cameraDisplay.X, _cameraDisplay.Y);
