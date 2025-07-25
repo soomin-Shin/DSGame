@@ -12,7 +12,8 @@ namespace JumpGame.Controller
     public class FontController
     {
         private PrivateFontCollection _fonts = new PrivateFontCollection();
-        public PrivateFontCollection Fonts
+        // 폰트
+        public PrivateFontCollection Fonts 
         {
             get
             {
@@ -23,7 +24,7 @@ namespace JumpGame.Controller
                 _fonts = value;
             }
         }
-
+        //폰트 실행
         public FontController(AdventureOfKnight parent){
             LoadCustomFont();
             parent.Font = new Font(_fonts.Families[0], 12, FontStyle.Regular);

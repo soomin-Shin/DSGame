@@ -9,12 +9,12 @@ namespace JumpGame.Model
 {
     public class Obstruction
     {
-        private List<Projectile> _projectileLines;
-        private Image _fireBallImage;
+        private List<Projectile> _projectileLines; // 불꽃 추가 리스트
+        private Image _fireBallImage; // 이미지
 
-        private const int FIRE_START_X_RIGHT = 95;
-        private const int FIRE_START_X_LEFT = 739;
-        private const int _FIRE_SPEED = 5;
+        private const int FIRE_START_X_RIGHT = 95; //X좌표 오른쪽 오ㅟ치
+        private const int FIRE_START_X_LEFT = 739; // X좌표 왼쪽 위치
+        private const int _FIRE_SPEED = 5; // 스피드
 
         public Obstruction()
         {
