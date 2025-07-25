@@ -237,16 +237,9 @@ namespace JumpGame
             this.KeyUp += GameForm_KeyUp;                  
             this.Paint += GameForm_Paint;
 
-            // 만약 스테이지 처음 선언할때 바꿔주고 싶으면 여기에 넣으시오.
-            if (_currentStage == "JumpStage")
-            {
-                JumpStage.CreateStage(this);
-                //BossStage.CreateStage(this);
-            }
-            else
-            {
+            // 점프 스테이지 생성
+            JumpStage.CreateStage(this);
 
-            }
             if (_enemyController?.GameCleared == true && !_gameClearDisplayed)
             {
                 _gameClearDisplayed = true;
@@ -347,19 +340,19 @@ namespace JumpGame
             }
 
             // 골인 발판 판정
-            for (int i = 0; i < _platforms.Count; i = i + 1)  // 각 스테이지
+            for (int i = 0; i < _platforms.Count; i = i + 1) 
             {
                 // i번째 발판이 Goal 타입이고 활성 되어 있는 경우
-                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true)  // 각 스테이지
+                if (_platforms[i].Type == PlatformType.Goal && _platforms[i].IsActive == true) 
                 {
                     // 골인 발판의 영역을 goalRect에 저장
-                    Rectangle goalRect = _platforms[i].Area;  // 각 스테이지
+                    Rectangle goalRect = _platforms[i].Area;
 
                     // 골인 발판 영역의 위쪽과 캐릭터 히트 박스의 아래쪽이 같은지 판단
-                    bool isOnGoal = charRect.Bottom == goalRect.Top; // 각 스테이지
+                    bool isOnGoal = charRect.Bottom == goalRect.Top; 
 
 
-                    if (isOnGoal == true) // 각 스테이지
+                    if (isOnGoal == true)
                     {
                         _jumpStageClear = true;
                         break;
